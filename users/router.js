@@ -134,14 +134,14 @@ router.post('/', jsonParser, (req, res) => {
     });
 });
 
-router.get('/users/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   //by id
   return User.findById(req.params.id)
     .then(user => res.json(user))
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-router.get('/users', (req, res) => {
+router.get('/', (req, res) => {
   //all users
   return User.find({})
     .then(user => res.json(user))

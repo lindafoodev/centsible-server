@@ -134,42 +134,7 @@ router.post('/', jsonParser, (req, res) => {
     });
 });
 
-router.post('/:userid/favorites', jsonParser, (req,res) => {
-    User
-    .update(
-      {_id : req.params.userid},
-      {$push: {favorites: req.body.playerId}}
-    )
-  .then(() => console.log('It worked!'))
-  // .catch(err => res.status(500).json({message: 'Internal server error'}));
-});
-// Never expose all your users like below in a prod application
-// we're just doing this so we have a quick way to see
-// if we're creating users. keep in mind, you can also
-// verify this in the Mongo shell.
-router.get('/:userid/favorites', (req, res) => {
-  console.log('its working!')
-  return User.findById(req.params.userid)
-    .then(user => {
-        const promises = user.favorites.map(playerId => NBA.stats.playerInfo({PlayerID: `${playerId}`}));
-        return Promise.all(promises)
-        .then(stats => {
-            res.json(Object.assign({}, user.serialize(), {stats}));
-        });
-      })
-      .catch(err => {
-        console.log(err)
-        res.status(500).json({message: 'Internal server error'})
-      })
-});
 
-router.delete('/:userid/favorites',jsonParser,(req,res) => {
-  console.log(req.body)
-  User
-  .update({_id: req.params.userid}, { $pull: { favorites: { $in: [req.body.playerId]}}})
-  .then(data => res.json(data))
-  .catch(err => console.log(err))
-})
 
 
 module.exports = {router};

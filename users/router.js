@@ -136,13 +136,13 @@ router.post('/', jsonParser, (req, res) => {
 
 router.get('/users/:id', (req, res) => {
   return User.findById(req.params.id)
-    .then(user => res.json(user.serialize()))
+    .then(user => res.json(user))
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
 router.get('/users', (req, res) => {
   return User.find({})
-    .then(user => res.json(user.serialize()))
+    .then(user => res.json(user))
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 

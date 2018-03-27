@@ -15,8 +15,8 @@ const UserSchema = mongoose.Schema({
   },
   firstName: {type: String, default: ''},
   lastName: {type: String, default: ''},
-  // bday: {type:Date, required: true},
-  // email: {type:String, required: true},
+  bday: {type:Date, required: true},
+  email: {type:String, required: true},
   game: {
     level: {type: Number, default: 1},
     initialFund: {type: Number, default: 5000},

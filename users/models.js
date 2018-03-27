@@ -15,21 +15,21 @@ const UserSchema = mongoose.Schema({
   },
   firstName: {type: String, default: ''},
   lastName: {type: String, default: ''},
-  // bday: {type:Date, required: true},
-  // email: {type:String, required: true},
-  // game: {
-  //   level: {type: Number, default: 1},
-  //   initialFund: {type: Number, default: 5000},
-  //   currentFund: {type: Number},
-  //   risk:{
-  //     1: {type: String},
-  //     2: {type: String},
-  //     3: {type: String},
-  //     4: {type: String},
-  //     5: {type: String}
-  //   },
-  //   year: {type: Number, default: 1}
-  // }
+  bday: {type:Date, required: true},
+  email: {type:String, required: true},
+  game: {
+    level: {type: Number, default: 1},
+    initialFund: {type: Number, default: 5000},
+    currentFund: {type: Number},
+    risk:{
+      1: {type: String},
+      2: {type: String},
+      3: {type: String},
+      4: {type: String},
+      5: {type: String}
+    },
+    year: {type: Number, default: 1}
+  }
 });
 // I'M SO LOST
 UserSchema.methods.serialize = function() {
@@ -37,14 +37,14 @@ UserSchema.methods.serialize = function() {
     username: this.username || '',
     firstName: this.firstName || '',
     lastName: this.lastName || '',
-    id: this._id
-    // bday: this.bday,
-    // email: this.email,
-    // level: this.game.level,
-    // initialFund: this.game.initialFund,
-    // currentFund: this.game.currentFund,
-    // risk: this.game.risk,
-    // year: this.game.year
+    id: this._id,
+    bday: this.bday,
+    email: this.email,
+    level: this.game.level,
+    initialFund: this.game.initialFund,
+    currentFund: this.game.currentFund,
+    risk: this.game.risk,
+    year: this.game.year
   };
 };
 

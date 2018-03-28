@@ -1,0 +1,66 @@
+//ClearBridge Aggressive Growth Fund
+{
+    "year": "1",
+    "gain": 16.28,
+    "risk": "high"
+} {
+    "year": "2",
+    "gain": 64.52,
+    "risk": "high"
+} {
+    "year": "3",
+    "gain": 79.73,
+    "risk": "high"
+} {
+    "year": "4",
+    "gain": 54.90,
+    "risk": "high"
+} {
+    "year": "5",
+    "gain": 87.18,
+    "risk": "high"
+}
+//PIMCO Active Bond ETF - low Risk
+{
+    "year": "1",
+    "gain": 8.91,
+    "risk": "low"
+} {
+    "year": "2",
+    "gain": 5.38,
+    "risk": "low"
+} {
+    "year": "3",
+    "gain": 8.21,
+    "risk": "low"
+} {
+    "year": "4",
+    "gain": 4.11,
+    "risk": "low"
+} {
+    "year": "5",
+    "gain": 3.99,
+    "risk": "low"
+}
+//MFS Moderate Allocation Fund
+{
+    "year": "1",
+    "gain": 56.25,
+    "risk": "moderate"
+} {
+    "year": "2",
+    "gain": 70.23,
+    "risk": "moderate"
+} {
+    "year": "3",
+    "gain": 74.15,
+    "risk": "moderate"
+} {
+    "year": "4",
+    "gain": 57.37,
+    "risk": "moderate"
+} {
+    "year": "5",
+    "gain": 72.66,
+    "risk": "moderate"
+}

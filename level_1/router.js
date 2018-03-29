@@ -33,23 +33,21 @@ router.put('/:id', (req, res) => {
 		.then(risk => {
 			newFundAmt = currentFund + (Math.floor(((risk[0].gain/100) * currentFund)));
 			console.log('newFundAmt = ', newFundAmt);
-		}) 
-		.catch(err => {
-			return res.status(500).json(err);
+	    return User
+				.findByIdAndUpdate(req.params.id, {
+					$set:{ 'currentFund': newFundAmt },
+					$push:{ 'risk': { 'x': year, 'y': newFundAmt }}
+				}, {new: true} )
+				.then(res => {
+					console.log('response = ', res);
+					return res.status(204).json(res.serialize());
+				})
+				.catch(err => {
+					return res.status(500).json(err);
+				});
+
 		});
 
-	User
-		.findByIdAndUpdate(req.params.id, {
-			$set:{ 'currentFund': newFundAmt },
-			$push:{ 'risk': { 'x': year, 'y': newFundAmt } }
-		})
-		.then(res => {
-			console.log('response = ', res);
-			return res.status(204).json(res.serialize());
-		})
-		.catch(err => {
-			return res.status(500).json(err);
-		});
 
 	// update the User Db with new currentFund amount and risk by year array
 	// User

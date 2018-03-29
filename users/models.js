@@ -29,7 +29,7 @@ const UserSchema = mongoose.Schema({
 
 
 UserSchema.virtual('riskArr').get(function() {
-    return `${this.risk.x}${this.risk.y}`.trim();
+    return `${this.risk.x} ${this.risk.y}`.trim();
 });
 
 // I'M SO LOST

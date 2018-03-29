@@ -37,9 +37,11 @@ router.put('/:id', (req, res) => {
 		.catch(err => {
 			return res.status(500).json(err);
 		});
-    
+
 	User
-		.findByIdAndUpdate(req.params.id, {$push:{'risk':[{'x': year, 'y': newFundAmt}]}
+		.findByIdAndUpdate(req.params.id, {
+			$set:{ 'currentFund': newFundAmt },
+			$push:{ 'risk': { 'x': year, 'y': newFundAmt } }
 		})
 		.then(res => {
 			console.log('response = ', res);
@@ -51,7 +53,7 @@ router.put('/:id', (req, res) => {
 
 	// update the User Db with new currentFund amount and risk by year array
 	// User
-	// 	.findByIdAndUpdate(req.params.id, {$set:{currentFund: newFundAmt}
+	// 	.findByIdAndUpdate(req.params.id, {$set: {'currentFund': newFundAmt}
 	// 	})
 	// 	.then(res => {
 	// 		console.log('response = ', res);

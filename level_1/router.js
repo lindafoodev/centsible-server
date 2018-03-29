@@ -16,7 +16,7 @@ router.put('/', (req, res) => {
 		const field = requiredFields[i];
 		if (!(field in req.body)) {
 			const message = `Missing \`${field}\` in request body`;
-			return res.status(400).send(message);
+			return res.status(422).send(message);
 		}
 	}
   

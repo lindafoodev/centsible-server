@@ -20,6 +20,8 @@ describe('Auth endpoints', function () {
   const password = 'examplePass';
   const firstName = 'Example';
   const lastName = 'User';
+  const email = 'hahaha@yahoo.com';
+  const bday = '03/13/2003';
 
   before(function () {
     return runServer();
@@ -35,7 +37,9 @@ describe('Auth endpoints', function () {
         username,
         password,
         firstName,
-        lastName
+        lastName,
+        bday,
+        email
       })
     );
   });
@@ -99,7 +103,7 @@ describe('Auth endpoints', function () {
       return chai
         .request(app)
         .post('/api/auth/login')
-        .send({ username, password })
+        .send({ username, password,email,bday })
         .then(res => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
@@ -111,7 +115,9 @@ describe('Auth endpoints', function () {
           expect(payload.user).to.deep.equal({
             username,
             firstName,
-            lastName
+            lastName,
+            email,
+            bday
           });
         });
     });

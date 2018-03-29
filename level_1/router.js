@@ -7,58 +7,50 @@ const {User} = require('../users/models');
 const router = express.Router();
 router.use(bodyParser.json());
 
-function _calcPercentIncrease( _fundVal, _risk, _year ) {
-	console.log('Enter calcPercentIncrease ', _fundVal, _risk, _year);
-	
-	let riskVal;
-	Risk
-		.find({
-			'risk': {'$in': [_risk]},
-			'year': {'$in': [_year]}
-		}) 
-		.then(risk => {
-			console.log('risk = ', risk[0].gain);
-			riskVal = risk[0].gain;                              
-			return _fundVal + ((riskVal/100) * _fundVal);
-		});
-}
 router.put('/:id', (req, res) => { 
-	console.log('enter put /risk', req.body);
+	console.log('Enter the PUT', req.body, req.params.id);
   
-	const requiredFields = ['risk','year'];
+	//validate the fields in the body
+	const requiredFields = ['risk','year','currentFund'];
 	for ( let i = 0; i < requiredFields.length; i++) {
 		const field = requiredFields[i];
-		console.log(field);
 		if (!(field in req.body)) {
 			const message = `Missing \`${field}\` in request body`;
 			return res.status(400).send(message);
 		}
 	}
   
-	let {risk, year} = req.body;
+	let {risk, year, currentFund} = req.body;
 	let newFundAmt;
-
-	User.findById(req.params.id)
-		.then(game => {
-			console.log('_game = ', game);
-	    newFundAmt = _calcPercentIncrease(game.game.currentFund, risk, year);
-			console.log('newFundAmt = ', newFundAmt);
-			let toUpdate = [];
-			toUpdate[year] = {x: year, y: newFundAmt};
-			console.log('toUpdate = ', toUpdate);
-		});
-	.findByIdAndUpdate(req.params.id, {$set: toUpdate})
-	.then(level => {
-		return res.status(201).json(level.serialize());
-	})
-	.catch(err => {
-		return res.status(err.code).json(err);
-	});
   
+	//get the % increase/decrease from the Risk Db. This value
+	//is determined by the year and risk level
+	Risk
+		.find({
+			'risk': {'$in': [risk]},
+			'year': {'$in': [year]}
+		}) 
+		.then(risk => {
+			newFundAmt = currentFund + (Math.floor(((risk[0].gain/100) * currentFund)));
+			console.log('newFundAmt = ', newFundAmt);
+		}) 
+		.catch(err => {
+			return res.status(500).json(err);
+		});
+
+	// update the User Db with new currentFund amount and risk by year array
+	return User
+		.findByIdAndUpdate(req.params.id, {$set:{game:{currentFund: newFundAmt}}},
+		                                  {$push:{game:{risk:[{x: year, y: newFundAmt}]}}
+			})
+		.then(res => {
+			console.log('response = ', res);
+			return res.status(204).json(res.serialize());
+		})
+		.catch(err => {
+			return res.status(500).json(err);
+		});
 });
-//send back risk array [{x: year, y: currentFund}]
-//and currentFund value and percent change for year/risk level
-//change risk object to [{x: year, y: currentFund}]
 
 router.get('/:risk', (req, res) => {
 	console.log('enter get /risk', req.params.risk);

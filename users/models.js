@@ -28,6 +28,12 @@ const UserSchema = mongoose.Schema({
         year: { type: Number, default: 1 }
     }
 });
+
+
+UserSchema.virtual('riskArr').get(function() {
+    return `${this.game.risk.x}${this.game.risk.y}`.trim();
+});
+
 // I'M SO LOST
 UserSchema.methods.serialize = function() {
     return {
@@ -40,14 +46,10 @@ UserSchema.methods.serialize = function() {
         level: this.game.level,
         initialFund: this.game.initialFund,
         currentFund: this.game.currentFund,
-        risk: this.game.risk,
+        risk: this.game.riskArr,
         year: this.game.year
     };
 };
-
-UserSchema.virtual('risk').get(function() {
-    return `${this.game.risk.x}${this.game.risk.y}`.trim();
-});
 
 UserSchema.methods.validatePassword = function(password) {
     return bcrypt.compare(password, this.password);

@@ -17,21 +17,19 @@ const UserSchema = mongoose.Schema({
     lastName: { type: String, default: '' },
     bday: { type: Date, required: true },
     email: { type: String, required: true },
-    game: {
-        level: { type: Number, default: 1 },
-        initialFund: { type: Number, default: 5000 },
-        currentFund: { type: Number, default: 5000 },
-        risk: [{
-            x: Number,
-            y: Number
-        }],
-        year: { type: Number, default: 1 }
-    }
+    level: { type: Number, default: 1 },
+    initialFund: { type: Number, default: 5000 },
+    currentFund: { type: Number, default: 5000 },
+    risk: [{
+        x: Number,
+        y: Number
+    }],
+    year: { type: Number, default: 1 }
 });
 
 
 UserSchema.virtual('riskArr').get(function() {
-    return `${this.game.risk.x}${this.game.risk.y}`.trim();
+    return `${this.risk.x}${this.risk.y}`.trim();
 });
 
 // I'M SO LOST
@@ -43,11 +41,11 @@ UserSchema.methods.serialize = function() {
         id: this._id,
         bday: this.bday,
         email: this.email,
-        level: this.game.level,
-        initialFund: this.game.initialFund,
-        currentFund: this.game.currentFund,
-        risk: this.game.riskArr,
-        year: this.game.year
+        level: this.level,
+        initialFund: this.initialFund,
+        currentFund: this.currentFund,
+        risk: this.riskArr,
+        year: this.year
     };
 };
 

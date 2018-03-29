@@ -37,12 +37,10 @@ router.put('/:id', (req, res) => {
 		.catch(err => {
 			return res.status(500).json(err);
 		});
-
-	// update the User Db with new currentFund amount and risk by year array
-	return User
-		.findByIdAndUpdate(req.params.id, {$set:{game:{currentFund: newFundAmt}}},
-		                                  {$push:{game:{risk:[{x: year, y: newFundAmt}]}}
-			})
+    
+	User
+		.findByIdAndUpdate(req.params.id, {$push:{'risk':[{'x': year, 'y': newFundAmt}]}
+		})
 		.then(res => {
 			console.log('response = ', res);
 			return res.status(204).json(res.serialize());
@@ -50,6 +48,18 @@ router.put('/:id', (req, res) => {
 		.catch(err => {
 			return res.status(500).json(err);
 		});
+
+	// update the User Db with new currentFund amount and risk by year array
+	// User
+	// 	.findByIdAndUpdate(req.params.id, {$set:{currentFund: newFundAmt}
+	// 	})
+	// 	.then(res => {
+	// 		console.log('response = ', res);
+	// 		return res.status(204).json(res.serialize());
+	// 	})
+	// 	.catch(err => {
+	// 		return res.status(500).json(err);
+	// 	});
 });
 
 router.get('/:risk', (req, res) => {

@@ -7,8 +7,8 @@ const {User} = require('../users/models');
 const router = express.Router();
 router.use(bodyParser.json());
 
-router.put('/:id', (req, res) => { 
-	console.log('Enter the PUT', req.body, req.params.id);
+router.put('/', (req, res) => { 
+	console.log('Enter the PUT', req.body, req.user._id);
   
 	//validate the fields in the body
 	const requiredFields = ['risk','year','currentFund'];
@@ -25,7 +25,7 @@ router.put('/:id', (req, res) => {
   
 	//get the % increase/decrease from the Risk Db. This value
 	//is determined by the year and risk level
-	Risk
+	return Risk
 		.find({
 			'risk': {'$in': [risk]},
 			'year': {'$in': [year]}
@@ -34,7 +34,7 @@ router.put('/:id', (req, res) => {
 			newFundAmt = currentFund + (Math.floor(((risk[0].gain/100) * currentFund)));
 			console.log('newFundAmt = ', newFundAmt);
 	    return User
-				.findByIdAndUpdate(req.params.id, {
+				.findByIdAndUpdate(req.user._id, {
 					$set:{ 'currentFund': newFundAmt },
 					$push:{ 'risk': { 'x': year, 'y': newFundAmt }}
 				}, {new: true} )
@@ -45,21 +45,10 @@ router.put('/:id', (req, res) => {
 				.catch(err => {
 					return res.status(500).json(err);
 				});
-
+		})
+		.catch(err => {
+			return res.status(500).json(err);
 		});
-
-
-	// update the User Db with new currentFund amount and risk by year array
-	// User
-	// 	.findByIdAndUpdate(req.params.id, {$set: {'currentFund': newFundAmt}
-	// 	})
-	// 	.then(res => {
-	// 		console.log('response = ', res);
-	// 		return res.status(204).json(res.serialize());
-	// 	})
-	// 	.catch(err => {
-	// 		return res.status(500).json(err);
-	// 	});
 });
 
 router.get('/:risk', (req, res) => {

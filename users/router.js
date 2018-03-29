@@ -141,7 +141,11 @@ router.post('/', jsonParser, (req, res) => {
 
 router.get('/:id', (req, res) => {
 	//by id
-	return User.findById(req.params.id)
+	let id = req.params.id;
+	if (req.params.id === 'self'){
+	  id = req.user._id;
+	}
+	return User.findById(id)
 		.then(user => res.json(user))
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });

@@ -43,7 +43,7 @@ UserSchema.methods.serialize = function() {
         level: this.level,
         initialFund: this.initialFund,
         currentFund: this.currentFund,
-        risk: this.riskArr,
+        risk: this.risk,
     };
 };
 

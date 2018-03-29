@@ -1,12 +1,19 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
-const NBA = require('nba');
-const {User} = require('./models');
+const passport = require('passport');
+
+const { User } = require('./models');
+const { localStrategy, jwtStrategy } = require('../auth/strategies');
 
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
 // Post to register a new user
 router.post('/', jsonParser, (req, res) => {
@@ -139,14 +146,18 @@ router.post('/', jsonParser, (req, res) => {
 		});
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', jwtAuth, (req, res) => {
 	//by id
 	let id = req.params.id;
 	if (req.params.id === 'self'){
-	  id = req.user._id;
+	  id = req.user.id;
+	  console.log(req.user);
 	}
 	return User.findById(id)
-		.then(user => res.json(user))
+		.then(user => {
+			console.log(user);
+			res.json(user);
+		})
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 

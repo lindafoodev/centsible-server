@@ -1,11 +1,12 @@
 /* eslint-env mocha */
 'use strict';
-global.TEST_DATABASE_URL = 'mongodb://Jc:Asdfasdf1@ds229549.mlab.com:29549/teamthree-test';
+const {dbConnect, dbDisconnect} = require('../db-mongoose');
+const {TEST_DATABASE_URL} = require('../config');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
 
-const { app, runServer, closeServer } = require('../server');
+const { app } = require('../server');
 const { User } = require('../users');
 const { JWT_SECRET } = require('../config');
 
@@ -31,12 +32,12 @@ describe('Auth endpoints', function () {
 	const risk = 'undefined';
 	const id = '5abd57bd2b88da823c3075a1';
 
-	before(function () {
-		return runServer();
+	before(function() {
+		return dbConnect(TEST_DATABASE_URL);
 	});
-
-	after(function () {
-		return closeServer();
+  
+	after(function() {
+		return dbDisconnect();
 	});
 
 	beforeEach(function() {

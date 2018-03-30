@@ -25,7 +25,7 @@ const UserSchema = mongoose.Schema({
 		x: { type: Number, default: 0 },
 		y: { type: Number, default: 5000 }
 	}],
-	year: Number,
+	year: { type: Number, default: 0 }
 });
 
 
@@ -44,7 +44,8 @@ UserSchema.methods.serialize = function() {
 		email: this.email,
 		level: this.level,
 		initialFund: this.initialFund,
-		currentFund: this.currentFund,
+        currentFund: this.currentFund,
+        previousFund: this.previousFund,
 		risk: this.risk,
 		year: this.year,
 	};

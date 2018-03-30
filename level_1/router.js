@@ -25,6 +25,7 @@ router.put('/', (req, res) => {
   
 	let {risk, year, currentFund} = req.body;
 	let newFundAmt;
+	let prevFundAmt;
   
 	//get the % increase/decrease from the Risk Db. This value
 	//is determined by the year and risk level
@@ -35,10 +36,11 @@ router.put('/', (req, res) => {
 		}) 
 		.then(risk => {
 			newFundAmt = currentFund + (Math.floor(((risk[0].gain/100) * currentFund)));
+			prevFundAmt = currentFund;
 			console.log('newFundAmt = ', newFundAmt);
 	    return User
 				.findByIdAndUpdate(req.user._id, {
-					$set:{ 'currentFund': newFundAmt, 'year': year },
+					$set:{ 'currentFund': newFundAmt, 'previousFund': prevFundAmt, 'year': year },
 					$push:{ 'risk': { 'x': year, 'y': newFundAmt }}
 				}, {new: true} )
 				.then(res => {

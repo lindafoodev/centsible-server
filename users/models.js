@@ -21,8 +21,8 @@ const UserSchema = mongoose.Schema({
     initialFund: { type: Number, default: 5000 },
     currentFund: { type: Number, default: 5000 },
     risk: [{
-        x: Number,
-        y: Number
+        x: { type: Number, default: 0 },
+        y: { type: Number, default: 5000 }
     }],
 });
 
@@ -43,7 +43,7 @@ UserSchema.methods.serialize = function() {
         level: this.level,
         initialFund: this.initialFund,
         currentFund: this.currentFund,
-        risk: this.riskArr,
+        risk: this.risk,
     };
 };
 

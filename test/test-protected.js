@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 'use strict';
 global.DATABASE_URL = 'mongodb://localhost/jwt-auth-demo-test';
 const chai = require('chai');
@@ -21,8 +22,8 @@ describe('Protected endpoint', function() {
 	const firstName = 'Example';
 	const lastName = 'User';
 	const email = 'JoeSchmo@gmail.com';
-	const bday = '3/3/93';
-
+	const bday = '6/6/66';
+  
 	before(function() {
 		return runServer();
 	});

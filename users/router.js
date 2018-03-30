@@ -1,17 +1,24 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
-const NBA = require('nba');
-const {User} = require('./models');
+const passport = require('passport');
+
+const { User } = require('./models');
+const { localStrategy, jwtStrategy } = require('../auth/strategies');
 
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
 
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
 // Post to register a new user
 router.post('/', jsonParser, (req, res) => {
 	console.log('Enter users/ POST ', req.body);
-	const requiredFields = ['username', 'password'];
+	const requiredFields = ['username', 'password', 'email', 'bday'];
 	const missingField = requiredFields.find(field => !(field in req.body));
 
 	if (missingField) {
@@ -23,7 +30,7 @@ router.post('/', jsonParser, (req, res) => {
 		});
 	}
 
-	const stringFields = ['username', 'password', 'firstName', 'lastName'];
+	const stringFields = ['username', 'password', 'firstName', 'lastName', 'email', 'bday'];
 	const nonStringField = stringFields.find(
 		field => field in req.body && typeof req.body[field] !== 'string'
 	);
@@ -98,7 +105,7 @@ router.post('/', jsonParser, (req, res) => {
 	// before this
 	firstName = firstName.trim();
 	lastName = lastName.trim();
-
+	console.log(req.body);
 	return User.find({username})
 		.count()
 		.then(count => {
@@ -139,10 +146,18 @@ router.post('/', jsonParser, (req, res) => {
 		});
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', jwtAuth, (req, res) => {
 	//by id
-	return User.findById(req.params.id)
-		.then(user => res.json(user))
+	let id = req.params.id;
+	if (req.params.id === 'self'){
+	  id = req.user.id;
+	  console.log(req.user);
+	}
+	return User.findById(id)
+		.then(user => {
+			console.log(user);
+			res.json(user);
+		})
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 

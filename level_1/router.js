@@ -7,17 +7,20 @@ const {User} = require('../users/models');
 const router = express.Router();
 router.use(bodyParser.json());
 
-router.put('/', (req, res) => { 
+router.post('/', (req, res) => { 
 	console.log('Enter the PUT', req.body, req.user._id);
   
 	//validate the fields in the body
 	const requiredFields = ['risk','year','currentFund'];
-	for ( let i = 0; i < requiredFields.length; i++) {
-		const field = requiredFields[i];
-		if (!(field in req.body)) {
-			const message = `Missing \`${field}\` in request body`;
-			return res.status(400).send(message);
-		}
+	const missingField = requiredFields.find(field => !(field in req.body));
+
+	if (missingField) {
+		return res.status(422).json({
+			code: 422,
+			reason: 'ValidationError',
+			message: 'Missing field',
+			location: missingField
+		});
 	}
   
 	let {risk, year, currentFund} = req.body;

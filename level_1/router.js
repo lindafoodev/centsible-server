@@ -7,7 +7,7 @@ const {User} = require('../users/models');
 const router = express.Router();
 router.use(bodyParser.json());
 
-router.post('/', (req, res) => { 
+router.put('/', (req, res) => { 
 	console.log('Enter the PUT', req.body, req.user._id);
   
 	//validate the fields in the body
@@ -38,7 +38,7 @@ router.post('/', (req, res) => {
 			console.log('newFundAmt = ', newFundAmt);
 	    return User
 				.findByIdAndUpdate(req.user._id, {
-					$set:{ 'currentFund': newFundAmt },
+					$set:{ 'currentFund': newFundAmt, 'year': year },
 					$push:{ 'risk': { 'x': year, 'y': newFundAmt }}
 				}, {new: true} )
 				.then(res => {

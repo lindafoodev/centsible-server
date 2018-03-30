@@ -1,67 +1,75 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
-const {Risk} = require('./models');
-const {User} = require('../users/models');
+const passport = require('passport');
+
+const { Risk } = require('./models');
+const { User } = require('../users/models');
+const { localStrategy, jwtStrategy } = require('../auth/strategies');
 
 const router = express.Router();
 router.use(bodyParser.json());
 
-router.put('/', (req, res) => { 
-	console.log('Enter the PUT', req.body, req.user._id);
-  
-	//validate the fields in the body
-	const requiredFields = ['risk','year','currentFund'];
-	const missingField = requiredFields.find(field => !(field in req.body));
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
-	if (missingField) {
-		return res.status(422).json({
-			code: 422,
-			reason: 'ValidationError',
-			message: 'Missing field',
-			location: missingField
-		});
-	}
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
+router.put('/invest', jwtAuth, (req, res) => { 
+  console.log('Enter the PUT', req.body, req.user.id);
   
-	let {risk, year, currentFund} = req.body;
-	let newFundAmt;
-	let prevFundAmt;
+  //validate the fields in the body
+  const requiredFields = ['risk','year','currentFund'];
+  const missingField = requiredFields.find(field => !(field in req.body));
+
+  if (missingField) {
+    return res.status(422).json({
+      code: 422,
+      reason: 'ValidationError',
+      message: 'Missing field',
+      location: missingField
+    });
+  }
   
-	//get the % increase/decrease from the Risk Db. This value
-	//is determined by the year and risk level
-	return Risk
-		.find({
-			'risk': {'$in': [risk]},
-			'year': {'$in': [year]}
-		}) 
-		.then(risk => {
-			newFundAmt = currentFund + (Math.floor(((risk[0].gain/100) * currentFund)));
-			prevFundAmt = currentFund;
-			console.log('newFundAmt = ', newFundAmt);
+  let {risk, year, currentFund} = req.body;
+  let newFundAmt;
+  let prevFundAmt;
+  
+  //get the % increase/decrease from the Risk Db. This value
+  //is determined by the year and risk level
+  return Risk
+    .find({
+      'risk': {'$in': [risk]},
+      'year': {'$in': [year]}
+    }) 
+    .then(risk => {
+      newFundAmt = currentFund + (Math.floor(((risk[0].gain/100) * currentFund)));
+      prevFundAmt = currentFund;
+      console.log('newFundAmt = ', newFundAmt);
 	    return User
-				.findByIdAndUpdate(req.user._id, {
-					$set:{ 'currentFund': newFundAmt, 'previousFund': prevFundAmt, 'year': year },
-					$push:{ 'risk': { 'x': year, 'y': newFundAmt }}
-				}, {new: true} )
-				.then(res => {
-					console.log('response = ', res);
-					return res.status(204).json(res.serialize());
-				})
-				.catch(err => {
-					return res.status(500).json(err);
-				});
-		})
-		.catch(err => {
-			return res.status(500).json(err);
-		});
+        .findByIdAndUpdate(req.user.id, {
+          $set:{ 'currentFund': newFundAmt, 'previousFund': prevFundAmt, 'year': year },
+          $push:{ 'risk': { 'x': year, 'y': newFundAmt }}
+        }, {new: true} )
+        .then(res => {
+          console.log('response = ', res);
+          return res.status(204).json(res.serialize());
+        })
+        .catch(err => {
+          return res.status(500).json(err);
+        });
+    })
+    .catch(err => {
+      return res.status(500).json(err);
+    });
 });
 
 router.get('/:risk', (req, res) => {
-	console.log('enter get /risk', req.params.risk);
-	//get risk level values and return
-	return Risk.find({}).where('risk').equals(req.params.risk)
-		.then(values => res.json(values))
-		.catch(err => res.status(500).json({message: 'Internal server error'}));
+  console.log('enter get /risk', req.params.risk);
+  //get risk level values and return
+  return Risk.find({}).where('risk').equals(req.params.risk)
+    .then(values => res.json(values))
+    .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
 module.exports = {router};

@@ -37,11 +37,11 @@ app.use('/api/risk/', level1Router);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 // A protected endpoint which needs a valid JWT to access it
-
-// app.get('/api/protected', jwtAuth, (req, res) => {
-  
-// });
-
+app.get('/api/protected', jwtAuth, (req, res) => {
+	return res.json({
+		data: 'rosebud'
+	}); 
+});
 
 
 app.use('*', (req, res) => {

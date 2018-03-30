@@ -7,6 +7,7 @@ const passport = require('passport');
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 const { router: level1Router } = require('./level_1');
+const {dbConnect} = require('./db-mongoose');
 
 mongoose.Promise = global.Promise;
 
@@ -53,22 +54,15 @@ app.use('*', (req, res) => {
 let server;
 
 function runServer() {
-	return new Promise((resolve, reject) => {
-		mongoose.connect(DATABASE_URL, { useMongoClient: true }, err => {
-			if (err) {
-				return reject(err);
-			}
-			server = app
-				.listen(PORT, () => {
-					console.log(`Your app is listening on port ${PORT}`);
-					resolve();
-				})
-				.on('error', err => {
-					mongoose.disconnect();
-					reject(err);
-				});
+	server = app
+		.listen(PORT, () => {
+			console.log(`Your app is listening on port ${PORT}`);
+			Promise.resolve();
+		})
+		.on('error', err => {
+			mongoose.disconnect();
+			Promise.reject(err);
 		});
-	});
 }
 
 function closeServer() {
@@ -86,6 +80,7 @@ function closeServer() {
 }
 
 if (require.main === module) {
+	dbConnect();
 	runServer().catch(err => console.error(err));
 }
 

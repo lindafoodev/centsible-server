@@ -1,10 +1,10 @@
 /* eslint-env mocha */
 'use strict';
-global.TEST_DATABASE_URL = 'mongodb://Jc:Asdfasdf1@ds229549.mlab.com:29549/teamthree-test';
+const {TEST_DATABASE_URL} = require('../config');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-
-const {app, runServer, closeServer} = require('../server');
+const {dbConnect, dbDisconnect} = require('../db-mongoose');
+const {app} = require('../server');
 const {User} = require('../users');
 
 const expect = chai.expect;
@@ -33,13 +33,13 @@ describe('/api/user', function() {
 	const date2 = '1966-06-06T04:00:00.000Z';
 
 	before(function() {
-		return runServer();
+		return dbConnect(TEST_DATABASE_URL);
 	});
-
+  
 	after(function() {
-		return closeServer();
+		return dbDisconnect();
 	});
-
+  
 	beforeEach(function() {});
 
 	afterEach(function() {

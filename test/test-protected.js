@@ -4,11 +4,11 @@ global.TEST_DATABASE_URL = 'mongodb://Jc:Asdfasdf1@ds229549.mlab.com:29549/teamt
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
-
-const {app, runServer, closeServer} = require('../server');
+const {TEST_DATABASE_URL} = require('../config');
+const {app} = require('../server');
 const {User} = require('../users');
 const {JWT_SECRET} = require('../config');
-
+const {dbConnect, dbDisconnect} = require('../db-mongoose');
 const expect = chai.expect;
 
 // This let's us make HTTP requests
@@ -25,12 +25,13 @@ describe('Protected endpoint', function() {
 	const bday = '6/6/66';
   
 	before(function() {
-		return runServer();
+		return dbConnect(TEST_DATABASE_URL);
 	});
-
+  
 	after(function() {
-		return closeServer();
-	});
+		return dbDisconnect();
+	}); 
+	
 
 	beforeEach(function() {
 		return User.hashPassword(password).then(password =>

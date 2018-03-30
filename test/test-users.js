@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 'use strict';
-global.DATABASE_URL = 'mongodb://localhost/jwt-auth-demo-test';
+global.TEST_DATABASE_URL = 'mongodb://Jc:Asdfasdf1@ds229549.mlab.com:29549/teamthree-test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
@@ -81,9 +81,9 @@ describe('/api/user', function() {
 					.send({
 						username,
 						firstName,
-            lastName,
-            email,
-            bday
+						lastName,
+						email,
+						bday
 					})
 					.then(() =>
 						expect.fail(null, null, 'Request should not succeed')

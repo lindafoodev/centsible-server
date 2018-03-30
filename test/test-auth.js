@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 'use strict';
-global.DATABASE_URL = 'mongodb://localhost/jwt-auth-demo-test';
+global.TEST_DATABASE_URL = 'mongodb://Jc:Asdfasdf1@ds229549.mlab.com:29549/teamthree-test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
@@ -217,7 +217,13 @@ describe('Auth endpoints', function () {
 					user: {
 						username,
 						firstName,
-						lastName
+						lastName,
+						email,
+						bday,
+						level,
+						initialFund,
+						currentFund,
+			      risk 
 					}
 				},
 				JWT_SECRET,

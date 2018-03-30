@@ -217,7 +217,13 @@ describe('Auth endpoints', function () {
 					user: {
 						username,
 						firstName,
-						lastName
+						lastName,
+						email,
+						bday,
+						level,
+						initialFund,
+						currentFund,
+			      risk 
 					}
 				},
 				JWT_SECRET,

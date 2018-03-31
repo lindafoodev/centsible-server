@@ -49,7 +49,7 @@ describe('/api/risk', function() {
 	});
 
 	afterEach(function () {
-		return mongoose.connection.dropDatabase(TEST_DATABASE_URL);
+		return mongoose.connection.dropDatabase();
 	});
 	
 

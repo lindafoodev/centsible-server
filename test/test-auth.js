@@ -53,7 +53,7 @@ describe('Auth endpoints', function () {
 	});
 
 	afterEach(function () {
-		return mongoose.connection.dropDatabase(TEST_DATABASE_URL);
+		return mongoose.connection.dropDatabase();
 	});
 
 	describe('/api/auth/login', function () {

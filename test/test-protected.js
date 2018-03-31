@@ -48,7 +48,7 @@ describe('Protected endpoint', function() {
 	});
 
 	afterEach(function () {
-		return mongoose.connection.dropDatabase(TEST_DATABASE_URL);
+		return mongoose.connection.dropDatabase();
 	});
 	
 

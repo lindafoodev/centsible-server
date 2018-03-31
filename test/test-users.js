@@ -4,9 +4,9 @@ const {TEST_DATABASE_URL} = require('../config');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const {dbConnect, dbDisconnect} = require('../db-mongoose');
-const {app} = require('../server');
+const {app, closeServer, runServer} = require('../server');
 const {User} = require('../users');
-
+const mongoose=require('mongoose');
 const expect = chai.expect;
 
 // This let's us make HTTP requests
@@ -19,32 +19,36 @@ describe('/api/user', function() {
 	const password = 'examplePass';
 	const firstName = 'Example';
 	const lastName = 'User';
-	const usernameB = 'exampleUserB';
-	const passwordB = 'examplePassB';
-	const firstNameB = 'ExampleB';
-	const lastNameB = 'UserB';
 	const email = 'JoeSchmo@gmail.com';
 	const bday = '6/6/66';
-	const currentFund = 5000;
-	const initialFund = 5000;
-	const risk = [];
-	const level = 1;
-	const date = '2003-03-13T04:00:00.000Z';
-	const date2 = '1966-06-06T04:00:00.000Z';
-
+ 
 	before(function() {
-		return dbConnect(TEST_DATABASE_URL);
+		console.log('runServer for tests');
+		return runServer(TEST_DATABASE_URL);
 	});
-  
-	after(function() {
-		return dbDisconnect();
-	});
-  
-	beforeEach(function() {});
 
-	afterEach(function() {
+	after(function() {
+		console.log('closing server after tests');
+		return closeServer();
+	});
+
+	beforeEach(function() {
+		return User.hashPassword(password).then(password =>
+			User.create({
+				username,
+				password,
+				firstName,
+				lastName,
+				bday,
+				email
+			})
+		);
+	});
+
+	afterEach(function () {
 		return User.remove({});
 	});
+
 
 	describe('/api/users', function() {
 		describe('POST', function() {
@@ -449,15 +453,15 @@ describe('/api/user', function() {
 			// 			expect(passwordIsCorrect).to.be.true;
 			// 		});
 			// });
-			it('Should trim firstName and lastName', function() {
+			it('Should trim username and password', function() {
 				return chai
 					.request(app)
 					.post('/api/users')
 					.send({
-						username,
-						password,
-						firstName: ` ${firstName} `,
-						lastName: ` ${lastName} `,
+						username: `  ${username}  `,
+						password: `  ${password}  `,
+						firstName,
+						lastName,
 						email,
 						bday
 					})

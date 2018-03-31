@@ -5,8 +5,8 @@ const {TEST_DATABASE_URL} = require('../config');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
-
-const { app } = require('../server');
+const mongoose = require('mongoose');
+const { app, runServer, closeServer } = require('../server');
 const { User } = require('../users');
 const { JWT_SECRET } = require('../config');
 
@@ -23,21 +23,20 @@ describe('Auth endpoints', function () {
 	const firstName = 'Example';
 	const lastName = 'User';
 	const email = 'hahaha@yahoo.com';
-	const bday_1 = '03/13/2003';
 	const bday = '2003-03-13T04:00:00.000Z';
 	const initialFund = 5000;
 	const currentFund = 5000;
 	const level = 1;
-	const risk_1 = [];
 	const risk = 'undefined';
-	const id = '5abd57bd2b88da823c3075a1';
 
 	before(function() {
-		return dbConnect(TEST_DATABASE_URL);
+		console.log('runServer for tests');
+		return runServer(TEST_DATABASE_URL);
 	});
   
 	after(function() {
-		return dbDisconnect();
+		console.log('closing server after tests');
+		return closeServer();
 	});
 
 	beforeEach(function() {
@@ -54,7 +53,7 @@ describe('Auth endpoints', function () {
 	});
 
 	afterEach(function () {
-		return User.remove({});
+		return mongoose.connection.dropDatabase();
 	});
 
 	describe('/api/auth/login', function () {

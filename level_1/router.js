@@ -1,15 +1,19 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 const {Risk} = require('./models');
 const {User} = require('../users/models');
-
+const { localStrategy, jwtStrategy } = require('../auth/strategies');
 const router = express.Router();
 router.use(bodyParser.json());
 
-router.put('/', (req, res) => { 
-	console.log('Enter the PUT', req.body, req.user._id);
-  
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
+router.put('/invest', jwtAuth, (req, res) => { 
 	//validate the fields in the body
 	const requiredFields = ['risk','year','currentFund'];
 	const missingField = requiredFields.find(field => !(field in req.body));
@@ -21,6 +25,7 @@ router.put('/', (req, res) => {
 			message: 'Missing field',
 			location: missingField
 		});
+    
 	}
   
 	let {risk, year, currentFund} = req.body;
@@ -37,15 +42,13 @@ router.put('/', (req, res) => {
 		.then(risk => {
 			newFundAmt = currentFund + (Math.floor(((risk[0].gain/100) * currentFund)));
 			prevFundAmt = currentFund;
-			console.log('newFundAmt = ', newFundAmt);
 	    return User
-				.findByIdAndUpdate(req.user._id, {
+				.findByIdAndUpdate(req.user.id, {
 					$set:{ 'currentFund': newFundAmt, 'previousFund': prevFundAmt, 'year': year },
 					$push:{ 'risk': { 'x': year, 'y': newFundAmt }}
 				}, {new: true} )
-				.then(res => {
-					console.log('response = ', res);
-					return res.status(204).json(res.serialize());
+				.then(data => {
+					return res.status(204).json(data.serialize());
 				})
 				.catch(err => {
 					return res.status(500).json(err);

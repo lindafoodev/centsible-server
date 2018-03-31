@@ -31,7 +31,7 @@ describe('Protected endpoint', function() {
   
 	after(function() {
 		console.log('closing server after tests');
-		return closeServer();
+		return closeServer(TEST_DATABASE_URL);
 	});
 
 	beforeEach(function() {
@@ -48,7 +48,7 @@ describe('Protected endpoint', function() {
 	});
 
 	afterEach(function () {
-		return mongoose.connection.dropDatabase();
+		return mongoose.connection.dropDatabase(TEST_DATABASE_URL);
 	});
 	
 

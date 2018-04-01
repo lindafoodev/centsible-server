@@ -16,7 +16,7 @@ chai.use(chaiHttp);
 
 describe('/api/user', function() {
 	const username = 'exampleUser';
-	const password = 'examplePass';
+	const password = 'examplePass12';
 	const firstName = 'Example';
 	const lastName = 'User';
 	const email = 'JoeSchmo@gmail.com';
@@ -473,13 +473,12 @@ describe('/api/user', function() {
 		// 					'firstName',
 		// 					'lastName',
 		// 					'email',
-		// 					'bday',
-		// 					'currentFund',
-		// 					'initialFund',
-		// 					'id',
-		// 					'level',
-		// 					'risk'
-
+		// 					'bday'
+		// 					// 'currentFund',
+		// 					// 'initialFund',
+		// 					// 'id',
+		// 					// 'level',
+		// 					// 'risk'
 		// 				);
 		// 				expect(res.body.username).to.equal(username);
 		// 				expect(res.body.firstName).to.equal(firstName);
@@ -494,7 +493,7 @@ describe('/api/user', function() {
 		// 				expect(user.lastName).to.equal(lastName);
 		// 			});
 		// 	});
-		// });
+		});
 
 		describe('GET', function() {
 			it('Should return an empty array initially', function() {

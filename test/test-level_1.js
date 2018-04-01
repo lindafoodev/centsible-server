@@ -32,7 +32,7 @@ describe('/api/risk', function() {
   
 	after(function() {
 		console.log('closing server after tests');
-		return closeServer(TEST_DATABASE_URL);
+		return closeServer();
 	});
 
 	beforeEach(function() {

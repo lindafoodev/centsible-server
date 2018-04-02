@@ -13,6 +13,10 @@ passport.use(jwtStrategy);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
+//endpoint takes in risk, year, and currentFund
+//and updates the User database with a new currentFund,
+//initialFund and previousFund
+//sends back the User object to the client
 router.put('/invest', jwtAuth, (req, res) => { 
 	console.log('enter the post api/risk/invest ', req.user.id);
 	//validate the fields in the body
@@ -63,6 +67,26 @@ router.put('/invest', jwtAuth, (req, res) => {
 		});
 });
 
+
+//route which takes in the year
+//and passes the risk strategies gain values for that year
+router.get('/invest/:year', (req, res) => {
+	console.log('Enter the GET /invest/:year endpoint year = ', req.params.year);
+	return Risk
+		.find({
+			'year' : {'$in': [req.params.year]}
+		})
+		.then(data => {
+			console.log('data back from risk.find ', data);
+			return res.status(204).json(data.serialize());
+		})
+		.catch(err => {
+			return res.status(500).json(err);
+		});
+});
+
+
+//endpoint to check that the Risk database has data in it
 router.get('/:risk', (req, res) => {
 	console.log('enter get /risk', req.params.risk);
 	//get risk level values and return

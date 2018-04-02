@@ -16,7 +16,7 @@ chai.use(chaiHttp);
 
 describe('/api/user', function() {
 	const username = 'exampleUser';
-	const password = 'examplePass';
+	const password = 'examplePass12';
 	const firstName = 'Example';
 	const lastName = 'User';
 	const email = 'JoeSchmo@gmail.com';

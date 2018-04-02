@@ -55,7 +55,7 @@ router.post('/', jsonParser, (req, res) => {
 	const nonTrimmedField = explicityTrimmedFields.find(
 		field => req.body[field].trim() !== req.body[field]
 	);
-
+	console.log('nonTrimmedField = ', nonTrimmedField);
 	if (nonTrimmedField) {
 		return res.status(422).json({
 			code: 422,

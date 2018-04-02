@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "node server.js",
-        "test": "mocha --colors --watch  ./test/test-auth.js */test-*.js"
+        "test": "mocha --exit"
     },
     "keywords": [],
     "author": "",
@@ -19,7 +19,6 @@
         "moments": "0.0.2",
         "mongoose": "^4.7.4",
         "morgan": "^1.7.0",
-        "nba": "^4.2.0",
         "passport": "^0.3.2",
         "passport-jwt": "^2.2.1",
         "passport-local": "^1.0.0"

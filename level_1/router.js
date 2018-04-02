@@ -14,11 +14,13 @@ passport.use(jwtStrategy);
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
 router.put('/invest', jwtAuth, (req, res) => { 
+	console.log('enter the post api/risk/invest ', req.user.id);
 	//validate the fields in the body
 	const requiredFields = ['risk','year','currentFund'];
 	const missingField = requiredFields.find(field => !(field in req.body));
 
 	if (missingField) {
+		console.log('missing field = ', missingField);
 		return res.status(422).json({
 			code: 422,
 			reason: 'ValidationError',
@@ -40,6 +42,7 @@ router.put('/invest', jwtAuth, (req, res) => {
 			'year': {'$in': [year]}
 		}) 
 		.then(risk => {
+			console.log('find from Risk Db = ', risk[0].gain);
 			newFundAmt = currentFund + (Math.floor(((risk[0].gain/100) * currentFund)));
 			prevFundAmt = currentFund;
 	    return User
@@ -48,6 +51,7 @@ router.put('/invest', jwtAuth, (req, res) => {
 					$push:{ 'risk': { 'x': year, 'y': newFundAmt }}
 				}, {new: true} )
 				.then(data => {
+					console.log('user data being sent back ', data);
 					return res.status(204).json(data.serialize());
 				})
 				.catch(err => {

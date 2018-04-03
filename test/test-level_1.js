@@ -78,20 +78,6 @@ describe('/api/risk/invest', function() {
 							.send({
 								username: username, 
 								password: password
-							})
-							.then( () => {
-								return chai
-									.request(app)
-									.put('/api/risk/invest')
-									.set('authorization', `Bearer ${token} `)
-									.send({
-										risk,
-										year,
-										currentFund
-									})
-									.then(usr => {
-										id = usr._id;
-									});
 							});
 					})
 			);
@@ -105,25 +91,23 @@ describe('/api/risk/invest', function() {
 
 	describe('/api/risk/invest', function() {
 		describe('PUT', function() {
-			// it('Should send back User data from protected endpoint', function () {
-			// 	console.log('user id = ', id);
-			// 	return chai
-			// 		.request(app)
-			// 		.put('/api/risk/invest')
-			// 		.set('authorization', `Bearer ${token} `)
-			// 		.send({
-			// 			risk,
-			// 			year,
-			// 			currentFund,
-			// 			id
-			// 		})
-			// 		.then(res => {
-			// 			expect(res).to.be.status(204);
-			// 			expect(res.body).to.be.an('object');
-			// 			expect(res.body.risk).to.equal(risk);
-			// 			expect(res.body.year).to.equal(year);
-			// 		});
-			// });
+			it('Should send back User data from protected endpoint', function () {
+				return chai
+					.request(app)
+					.put('/api/risk/invest')
+					.set('authorization', `Bearer ${token} `)
+					.send({
+						risk,
+						year,
+						currentFund,
+					})
+					.then(res => {
+						expect(res).to.be.status(204);
+						expect(res.body).to.be.an('object');
+						expect(res.body.risk).to.equal(risk);
+						expect(res.body.year).to.equal(year);
+					});
+			});
 			// it('Should reject for missing field in body', function() {
 			// 	const token = jwt.sign(
 			// 		{

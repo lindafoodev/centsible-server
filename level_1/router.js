@@ -70,7 +70,7 @@ router.put('/invest', jwtAuth, (req, res) => {
 
 //route which takes in the year
 //and passes the risk strategies gain values for that year
-router.get('/invest/:year', (req, res) => {
+router.get('/invest/:year', jwtAuth, (req, res) => {
 	console.log('Enter the GET /invest/:year endpoint year = ', req.params.year);
 	return Risk
 		.find({
@@ -78,7 +78,7 @@ router.get('/invest/:year', (req, res) => {
 		})
 		.then(data => {
 			console.log('data back from risk.find ', data);
-			return res.status(204).json(data.serialize());
+			return res.json(data);
 		})
 		.catch(err => {
 			return res.status(500).json(err);
@@ -87,6 +87,7 @@ router.get('/invest/:year', (req, res) => {
 
 
 //endpoint to check that the Risk database has data in it
+//not used by the client
 router.get('/:risk', (req, res) => {
 	console.log('enter get /risk', req.params.risk);
 	//get risk level values and return

@@ -12,7 +12,7 @@ RiskSchema.methods.serialize = function() {
 	return {
 		year: this.year,
 		gain: this.gain,
-		risk: this.risk
+		risk: this.risk,
 	};
 };
 

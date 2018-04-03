@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "node server.js",
-        "test": "mocha --timeout 5000 --colors --watch */test-*.js"
+        "test": "mocha --exit"
     },
     "keywords": [],
     "author": "",

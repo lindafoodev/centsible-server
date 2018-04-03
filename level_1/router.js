@@ -45,14 +45,15 @@ router.put('/invest', jwtAuth, (req, res) => {
 			'risk': {'$in': [risk]},
 			'year': {'$in': [year]}
 		}) 
-		.then(risk => {
-			console.log('find from Risk Db = ', risk[0].gain);
-			newFundAmt = currentFund + (Math.floor(((risk[0].gain/100) * currentFund)));
+		.then(riskData => {
+			console.log('find from riskData Db = ', riskData[0].gain);
+			let growth = riskData[0].gain;
+			newFundAmt = currentFund + (Math.floor(((riskData[0].gain/100) * currentFund)));
 			prevFundAmt = currentFund;
 	    return User
 				.findByIdAndUpdate(req.user.id, {
 					$set:{ 'currentFund': newFundAmt, 'previousFund': prevFundAmt, 'year': year },
-					$push:{ 'risk': { 'x': year, 'y': newFundAmt }}
+					$push:{ 'risk': { 'x': year, 'y': newFundAmt, 'strategy': risk, 'previousYear': prevFundAmt, 'growth': growth}}
 				}, {new: true} )
 				.then(data => {
 					console.log('user data being sent back ', data);

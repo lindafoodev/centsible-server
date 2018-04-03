@@ -55,7 +55,7 @@ router.post('/', jsonParser, (req, res) => {
 	const nonTrimmedField = explicityTrimmedFields.find(
 		field => req.body[field].trim() !== req.body[field]
 	);
-	console.log('nonTrimmedField = ', nonTrimmedField);
+
 	if (nonTrimmedField) {
 		return res.status(422).json({
 			code: 422,
@@ -101,6 +101,12 @@ router.post('/', jsonParser, (req, res) => {
 	}
 
 	let {username, password, firstName = '', lastName = '', email, bday} = req.body;
+	let risk = [{
+		"x": 0,
+		"y": 5000,
+
+	}];
+	let intro = false;
 	// Username and password come in pre-trimmed, otherwise we throw an error
 	// before this
 	firstName = firstName.trim();
@@ -128,7 +134,9 @@ router.post('/', jsonParser, (req, res) => {
 				firstName,
 				lastName,
 				email,
-				bday
+				bday,
+				risk,
+				intro
 			});
 		})
 		.then(user => {

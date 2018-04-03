@@ -28,8 +28,6 @@ describe('Auth endpoints', function () {
 	const currentFund = 5000;
 	const level = 1;
 	const risk = [];
-	const year = 0;
-	let id;
 
 	before(function() {
 		console.log('runServer for tests');
@@ -38,6 +36,7 @@ describe('Auth endpoints', function () {
   
 	after(function() {
 		console.log('closing server after tests');
+		closeServer();
 		return dbDisconnect();
 	});
 
@@ -109,36 +108,23 @@ describe('Auth endpoints', function () {
 					expect(res).to.have.status(401);
 				});
 		});
-		// it('Should return a valid auth token', function () {
-		// 	return chai
-		// 		.request(app)
-		// 		.post('/api/auth/login')
-		// 		.send({ username, password })
-		// 		.then(res => {
-		// 			expect(res).to.have.status(200);
-		// 			expect(res.body).to.be.an('object');
-		// 			const token = res.body.authToken;
-		// 			console.log('authToken = ', token);
-		// 			expect(token).to.be.a('string');
-		// 			const payload = jwt.verify(token, JWT_SECRET, {
-		// 				algorithm: ['HS256']
-		// 			});
-		// 			expect(payload.user).to.deep.equal({
-		// 				username,
-		// 				firstName,
-		// 				lastName,
-		// 				email,
-		// 				bday,
-		// 				level,
-		// 				initialFund,
-		// 				currentFund,
-		// 				risk,
-		// 				year,
-		// 				id
-		// 			});
-		// 			expect(payload.exp).to.be.at.least(decoded.exp);
-		// 		});
-		// });
+		it('Should return a valid auth token', function () {
+			return chai
+				.request(app)
+				.post('/api/auth/login')
+				.send({ username, password })
+				.then(res => {
+					expect(res).to.have.status(200);
+					expect(res.body).to.be.an('object');
+					const token = res.body.authToken;
+					expect(token).to.be.a('string');
+					const payload = jwt.verify(token, JWT_SECRET, {
+						algorithm: ['HS256']
+					});
+					const decoded = jwt.decode(token);
+					expect(payload.exp).to.be.at.least(decoded.exp);
+				});
+		});
 	});
 
 	describe('/api/auth/refresh', function () {

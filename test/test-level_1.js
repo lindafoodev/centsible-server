@@ -6,7 +6,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const {JWT_SECRET} = require('../config');
 const jwt = require('jsonwebtoken');
-const { app } = require('../server');
+const { app, closeServer } = require('../server');
 const { User } = require('../users');
 const passportStub = require('passport-stub');
 
@@ -26,27 +26,10 @@ describe('/api/risk/invest', function() {
 	const email = 'JoeSchmo@gmail.com';
 	const bday = '2/2/82';
 	const risk = 'high';
-	const year = '1';
+	const year = 1;
 	const currentFund = 5200;
-	let id = 0;
-
+	let receivedToken;
  
-	const token = jwt.sign({
-		user: {
-			username, 
-			firstName,
-			lastName,
-			email,
-			bday
-		}
-	},
-	'chachaslide',
-	{
-		algorithm: 'HS256',
-		subject: username,
-		expiresIn: '7d'
-	}
-	);
   
 	before(function() {
 		console.log('runServer for tests');
@@ -55,9 +38,10 @@ describe('/api/risk/invest', function() {
   
 	after(function() {
 		console.log('closing server after tests');
+		closeServer();
 		return dbDisconnect();
 	});
-
+	//create a user, login the user, get the token, which is required for the protected endpoint tests
 	beforeEach(function() {
 		console.log('BeforeEach');
 		return User.hashPassword(password)
@@ -74,10 +58,17 @@ describe('/api/risk/invest', function() {
 						return chai
 							.request(app)
 							.post('/api/auth/login')
-							.set('authorization', `Bearer ${token}`)
 							.send({
 								username: username, 
 								password: password
+							})
+							.then(res => {
+								expect(res).to.have.status(200);
+								receivedToken = res.body.authToken;
+							})
+							.catch(err => {
+								if (err instanceof chai.AssertionError)
+									throw err;
 							});
 					})
 			);
@@ -91,87 +82,60 @@ describe('/api/risk/invest', function() {
 
 	describe('/api/risk/invest', function() {
 		describe('PUT', function() {
-			// it('Should send back User data from protected endpoint', function () {
-			// 	return chai
-			// 		.request(app)
-			// 		.put('/api/risk/invest')
-			// 		.set('authorization', `Bearer ${token} `)
-			// 		.send({
-			// 			risk,
-			// 			year,
-			// 			currentFund,
-			// 		})
-			// 		.then(res => {
-			// 			expect(res).to.be.status(204);
-			// 			expect(res.body).to.be.an('object');
-			// 			expect(res.body.risk).to.equal(risk);
-			// 			expect(res.body.year).to.equal(year);
-			// 		});
-			// });
-			// it('Should reject for missing field in body', function() {
-			// 	const token = jwt.sign(
-			// 		{
-			// 			username,
-			// 			firstName,
-			// 			lastName,
-			// 			email,
-			// 			bday
-			// 		},
-			// 		JWT_SECRET,
-			// 		{
-			// 			algorithm: 'HS256',
-			// 			subject: username,
-			// 			expiresIn: '7d'
-			// 		}
-			// 	);
-			// 	return chai
-			// 		.request(app)
-			// 		.put('/api/risk/invest')
-			// 		.set('Authorization', `Bearer ${token}`)
-			// 		.send({
-			// 			risk,
-			// 			currentFund
-			// 		})
-			// 		.then(() =>
-			// 			expect.fail(null, null, 'Request should not succeed')
-			// 		)
-			// 		.catch(err => {
-			// 			if (err instanceof chai.AssertionError) {
-			// 				throw err;
-			// 			}
-			// 			const res = err.response;
-			// 			expect(res).to.have.status(422);
-			// 			expect(res.body.reason).to.equal('ValidationError');
-			// 			expect(res.body.message).to.equal('Missing field');
-			// 			expect(res.body.location).to.equal('year');
-			// 		});
-			// });
-			// it('Should update and return the User object', function () {
-			// 	return chai
-			// 		.request(app)
-			// 		.put('/api/risk/invest')
-			// 		.send({
-			// 			risk,
-			// 			year,
-			// 			currentFund
-			// 		})
-			// 		.then( res => {
-			// 			expect(res).to.have.status(201);
-			// 			expect(res.body).to.be.an('object');
-			// 			expect(res.body).to.have.keys(
-			// 				'username',
-			// 				'email',
-			// 				'bday',
-			// 				'risk',
-			// 				'currentFund',
-			// 				'initialFund',
-			// 				'previousFund',
-			// 				'level',
-			// 				'lastName',
-			// 				'firstName'
-			// 			);
-			// 		});
-			// });
+			it('Should update and return User data', function () {
+				return chai
+					.request(app)
+					.put('/api/risk/invest')
+					.set('authorization', `Bearer ${receivedToken} `)
+					.send({
+						risk,
+						year,
+						currentFund,
+					})
+					.then(res => {
+						expect(res).to.be.status(200);
+						expect(res.body).to.be.an('object');
+						expect(res.body.username).to.equal(username);
+						expect(res.body.risk[0].strategy).to.equal(risk);
+						expect(res.body.year).to.equal(year);
+					});
+			});
+			it('Should reject for missing field in body', function() {
+				return chai
+					.request(app)
+					.put('/api/risk/invest')
+					.set('Authorization', `Bearer ${receivedToken}`)
+					.send({
+						risk,
+						currentFund
+					})
+					.then(() =>
+						expect.fail(null, null, 'Request should not succeed')
+					)
+					.catch(err => {
+						if (err instanceof chai.AssertionError) {
+							throw err;
+						}
+						const res = err.response;
+						expect(res).to.have.status(422);
+						expect(res.body.reason).to.equal('ValidationError');
+						expect(res.body.message).to.equal('Missing field');
+						expect(res.body.location).to.equal('year');
+					});
+			});
+			it('Should return all the strategies by year', function () {
+				return chai
+					.request(app)
+					.get('/api/risk/invest/' + year)
+					.set('Authorization', `Bearer ${receivedToken}`)
+					.send({
+						year,
+					})
+					.then( res => {
+						expect(res).to.have.status(200);
+						expect(res.body).to.be.an('array');
+					});
+			});
 		});
 	});
 });

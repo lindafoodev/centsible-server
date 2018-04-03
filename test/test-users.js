@@ -21,6 +21,11 @@ describe('/api/user', function() {
 	const lastName = 'User';
 	const email = 'JoeSchmo@gmail.com';
 	const bday = '6/6/66';
+	const risk = [{
+		'x': 0,
+		'y': 5000
+	}];
+	const intro = false;
  
 	before(function() {
 		console.log('runServer for tests');
@@ -29,6 +34,7 @@ describe('/api/user', function() {
 
 	after(function() {
 		console.log('closing server after tests');
+		closeServer();
 		return dbDisconnect();
 	});
 
@@ -376,7 +382,6 @@ describe('/api/user', function() {
 					email,
 					bday
 				})
-					// })
 					.then(() =>
 						expect.fail(null, null, 'Request should not succeed')
 					)
@@ -395,49 +400,46 @@ describe('/api/user', function() {
 					});
 			});
 			// it('Should create a new user', function() {
-			// 	return chai
-			// 		.request(app)
-			// 		.post('/api/users')
-			// 		.send({
-			// 			username,
-			// 			password,
-			// 			firstName,
-			// 			lastName,
-			// 			email,
-			// 			bday
-			// 		})
+			// 	return chai.request(app).post('/api/users').send({
+			// 		username,
+			// 		password,
+			// 		firstName,
+			// 		lastName,
+			// 		email,
+			// 		bday,
+			// 	})
 			// 		.then(res => {
 			// 			expect(res).to.have.status(201);
 			// 			expect(res.body).to.be.an('object');
-			// 			expect(res.body).to.have.keys(
-			// 				'username',
-			// 				'firstName',
-			// 				'lastName',
-			// 				'email',
-			// 				'bday',
-			// 				'level',
-			// 				'currentFund',
-			// 				'initialFund',
-			// 				'risk',
-			// 				'id'
-			// 			);
-			// 			expect(res.body.username).to.equal(username);
-			// 			expect(res.body.firstName).to.equal(firstName);
-			// 			expect(res.body.lastName).to.equal(lastName);
-			// 			expect(res.body.email).to.equal(email);
-			// 			return User.findOne({
-			// 				username
-			// 			});
-			// 		})
-			// 		.then(user => {
-			// 			expect(user).to.not.be.null;
-			// 			expect(user.firstName).to.equal(firstName);
-			// 			expect(user.lastName).to.equal(lastName);
-			// 			return user.validatePassword(password);
-			// 		})
-			// 		.then(passwordIsCorrect => {
-			// 			expect(passwordIsCorrect).to.be.true;
-			// 		});
+			// expect(res.body).to.have.keys(
+			// 	'username',
+			// 	'firstName',
+			// 	'lastName',
+			// 	'email',
+			// 	'bday',
+			// 	'level',
+			// 	'currentFund',
+			// 	'initialFund',
+			// 	'risk',
+			// 	'id'
+			// );
+			// expect(res.body.username).to.equal(username);
+			// expect(res.body.firstName).to.equal(firstName);
+			// expect(res.body.lastName).to.equal(lastName);
+			// expect(res.body.email).to.equal(email);
+			// return User.findOne({
+			// 	username
+			// });
+			// })
+			// .then(user => {
+			// 	expect(user).to.not.be.null;
+			// 	expect(user.firstName).to.equal(firstName);
+			// 	expect(user.lastName).to.equal(lastName);
+			// 	return user.validatePassword(password);
+			// })
+			// .then(passwordIsCorrect => {
+			// 	expect(passwordIsCorrect).to.be.true;
+			// });
 			// });
 		});
 	});

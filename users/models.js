@@ -20,11 +20,15 @@ const UserSchema = mongoose.Schema({
 	level: { type: Number, default: 1 },
 	initialFund: { type: Number, default: 5000 },
 	currentFund: { type: Number, default: 5000 },
-	previousFund: Number,
+	previousFund: {type: Number},
 	risk: [{
 		x: { type: Number, default: 0 },
-		y: { type: Number, default: 5000 }
+		y: { type: Number, default: 5000 },
+		strategy:{type: String},
+		growth: {type: Number},
+		previousYear: {type: Number}
 	}],
+	intro: {type: Boolean, default: false},
 	year: { type: Number, default: 0 }
 });
 

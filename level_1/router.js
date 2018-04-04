@@ -97,4 +97,10 @@ router.get('/:risk', (req, res) => {
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
+router.get('/market/all', (req, res) => {
+	return Risk.find({})
+	.then(values => res.json(values))
+	.catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
 module.exports = {router};

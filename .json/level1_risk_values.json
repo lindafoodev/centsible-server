@@ -1,81 +1,122 @@
 [{
-    "year": "1",
-    "gain": "0.35",
-    "risk": "mattress"
+"year": "1",
+"gain": "0.35",
+"risk": "mattress",
+"yearEndBalance": 5018,
+"amtChange":  18
 }, {
-    "year": "2",
-    "gain": "0.20",
-    "risk": "mattress"
+"year": "2",
+"gain": "0.20",
+"risk": "mattress",
+"yearEndBalance": 5028,
+"amtChange": 10
 }, {
-    "year": "3",
-    "gain": "1.01",
-    "risk": "mattress"
+"year": "3",
+"gain": "1.01",
+"risk": "mattress",
+"yearEndBalance": 5078,
+"amtChange":  51
 }, {
-    "year": "4",
-    "gain": "0.12",
-    "risk": "mattress"
+"year": "4",
+"gain": "0.12",
+"risk": "mattress",
+"yearEndBalance": 5084,
+"amtChange":  6
 }, {
-    "year": "5",
-    "gain": "0.67",
-    "risk": "mattress"
+"year": "5",
+"gain": "0.67",
+"risk": "mattress",
+"yearEndBalance": 5118,
+"amtChange": 34
 }, {
-    "year": "1",
-    "gain": "16.28",
-    "risk": "high"
+"year": "1",
+"gain": "16.28",
+"risk": "high",
+"yearEndBalance": 5814,
+"amtChange":  814
 }, {
-    "year": "2",
-    "gain": "64.52",
-    "risk": "high"
+"year": "2",
+"gain": "64.52",
+"risk": "high",
+"yearEndBalance": 9565,
+"amtChange": 3751
 }, {
-    "year": "3",
-    "gain": "79.73",
-    "risk": "high"
+"year": "3",
+"gain": "79.73",
+"risk": "high",
+"yearEndBalance": 17192,
+"amtChange": 7626
 }, {
-    "year": "4",
-    "gain": "54.90",
-    "risk": "high"
+"year": "4",
+"gain": "54.90",
+"risk": "high",
+"yearEndBalance": 26630,
+"amtChange": 9438
 }, {
-    "year": "5",
-    "gain": "87.18",
-    "risk": "high"
+"year": "5",
+"gain": "87.18",
+"risk": "high",
+"yearEndBalance": 49845,
+"amtChange": 23216
 }, {
-    "year": "1",
-    "gain": "8.91",
-    "risk": "low"
+"year": "1",
+"gain": "8.91",
+"risk": "low",
+"yearEndBalance": 5446,
+"amtChange": 446
 }, {
-    "year": "2",
-    "gain": "5.38",
-    "risk": "low"
+"year": "2",
+"gain": "5.38",
+"risk": "low",
+"yearEndBalance": 5738,
+"amtChange": 293
 }, {
-    "year": "3",
-    "gain": "8.21",
-    "risk": "low"
+"year": "3",
+"gain": "8.21",
+"risk": "low",
+"yearEndBalance": 6210,
+"amtChange": 471
 }, {
-    "year": "4",
-    "gain": "4.11",
-    "risk": "low"
+"year": "4",
+"gain": "4.11",
+"risk": "low",
+"yearEndBalance": 6465,
+"amtChange": 255
 }, {
-    "year": "5",
-    "gain": "3.99",
-    "risk": "low"
+"year": "5",
+"gain": "3.99",
+"risk": "low",
+"yearEndBalance": 6723,
+"amtChange": 258
 }, {
-    "year": "1",
-    "gain": "56.25",
-    "risk": "moderate"
+"year": "1",
+"gain": "56.25",
+"risk": "moderate",
+"yearEndBalance": 7813,
+"amtChange": 2813
 }, {
-    "year": "2",
-    "gain": "70.23",
-    "risk": "moderate"
+"year": "2",
+"gain": "70.23",
+"risk": "moderate",
+"yearEndBalance": 13299,
+"amtChange": 5487
 }, {
-    "year": "3",
-    "gain": "74.15",
-    "risk": "moderate"
+"year": "3",
+"gain": "74.15",
+"risk": "moderate",
+"yearEndBalance": 23161,
+"amtChange": 9861
 }, {
-    "year": "4",
-    "gain": "57.37",
-    "risk": "moderate"
+"year": "4",
+"gain": "57.37",
+"risk": "moderate",
+"yearEndBalance": 36448,
+"amtChange": 13287
 }, {
-    "year": "5",
-    "gain": "72.66",
-    "risk": "moderate"
+"year": "5",
+"gain": "72.66",
+"risk": "moderate",
+"yearEndBalance": 62931,
+"amtChange": 26483
 }]
+    

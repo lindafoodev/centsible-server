@@ -4,7 +4,7 @@ mongoose.Promise = global.Promise;
 
 const RiskSchema = mongoose.Schema ({
 	year: String,
-	gain: Number,
+	gain: String,
 	risk: String 
 });
 

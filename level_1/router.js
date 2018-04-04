@@ -57,7 +57,7 @@ router.put('/invest', jwtAuth, (req, res) => {
 				}, {new: true} )
 				.then(data => {
 					console.log('user data being sent back ', data);
-					return res.status(204).json(data.serialize());
+					return res.status(200).json(data.serialize());
 				})
 				.catch(err => {
 					return res.status(500).json(err);

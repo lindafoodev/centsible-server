@@ -61,7 +61,7 @@ function runServer(databaseUrl = DATABASE_URL, port = PORT) {
 			}
 			server = app.listen(port, () => {
 				console.log(`Your app is listening on port ${port}`);
-				resolve();
+				resolve(server);
 			})
 				.on('error', err => {
 					mongoose.disconnect();
@@ -74,16 +74,15 @@ function runServer(databaseUrl = DATABASE_URL, port = PORT) {
 // this function closes the server, and returns a promise. we'll
 // use it in our integration tests later.
 function closeServer() {
-	return mongoose.disconnect().then(() => {
-		return new Promise((resolve, reject) => {
-			console.log('Closing server');
-			server.close(err => {
-				console.error(err);
-				if (err) {
-					return reject(err);
-				}
-				resolve();
-			});
+	return new Promise((resolve, reject) => {
+		mongoose.disconnect();
+		console.log('Closing server');
+		server.close(err => {
+			console.error(err);
+			if (err) {
+				return reject(err);
+			}
+			resolve();
 		});
 	});
 }

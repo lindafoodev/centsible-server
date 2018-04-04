@@ -4,8 +4,10 @@ mongoose.Promise = global.Promise;
 
 const RiskSchema = mongoose.Schema ({
 	year: String,
-	gain: String,
-	risk: String 
+	gain: Number,
+	risk: String,
+	yearEndBalance: Number,
+	amtChange: Number,
 });
 
 RiskSchema.methods.serialize = function() {
@@ -13,6 +15,9 @@ RiskSchema.methods.serialize = function() {
 		year: this.year,
 		gain: this.gain,
 		risk: this.risk,
+		yearEndBalance: this.yearEndBalance,
+		amtChange: this.amtChange,
+
 	};
 };
 

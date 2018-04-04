@@ -58,4 +58,44 @@
     "year": "5",
     "gain": "72.66",
     "risk": "moderate"
-}]
+},{
+
+    "year": "1",
+ 
+    "gain": "0.35",
+ 
+    "risk": "mattress"
+ 
+ }, {
+ 
+    "year": "2",
+ 
+    "gain": "0.20",
+ 
+    "risk": "mattress"
+ 
+ }, {
+ 
+    "year": "3",
+ 
+    "gain": "1.01",
+ 
+    "risk": "mattress"
+ 
+ }, {
+ 
+    "year": "4",
+ 
+    "gain": "0.12",
+ 
+    "risk": "mattress"
+ 
+ }, {
+ 
+    "year": "5",
+ 
+    "gain": "0.67",
+ 
+    "risk": "mattress"
+ 
+ }]

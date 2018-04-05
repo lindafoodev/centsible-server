@@ -43,7 +43,7 @@ router.put('/invest', jwtAuth, (req, res) => {
 	return Risk
 		.find({
 			'risk': {'$in': [risk]},
-			'year': {'$in': [year]}
+			'x': {'$in': [year]}
 		}) 
 		.then(riskData => {
 			console.log('find from riskData Db = ', riskData[0].gain);
@@ -89,7 +89,7 @@ router.get('/invest/:year', jwtAuth, (req, res) => {
 	console.log('Enter the GET /invest/:year endpoint year = ', req.params.year);
 	return Risk
 		.find({
-			'year' : {'$in': [req.params.year]}
+			'x' : {'$in': [req.params.year]}
 		})
 		.then(data => {
 			console.log('data back from risk.find ', data);
@@ -121,6 +121,17 @@ router.get('/market/all', jwtAuth, (req, res) => {
 			return res.json(values);
 		})
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
+router.get('/market/:strat', jwtAuth, (req, res) => {
+	console.log('Enter the market/optimal endpoint');
+	return Risk.find({'risk': {'$in': [req.params.strat]}})
+		.then(values => {
+			const newArr = [{x:0,y:5000},...values];
+			console.log('risk values = ', values);
+			return res.json(newArr);
+		})
+		.catch(err => res.status(500).json(err,{message: 'Internal server error'}));
 });
 
 module.exports = {router};

@@ -68,6 +68,20 @@ router.put('/invest', jwtAuth, (req, res) => {
 		});
 });
 
+router.get('/market/:strat', (req, res) => {
+	console.log('Enter the market/optimal endpoint');
+	return Risk.find({'risk': {'$in': [req.params.strat]}})
+		.then(values => {
+			const newArr = [{x:0,y:5000},...values];
+			console.log('risk values = ', values);
+			return res.json(newArr);
+		})
+		.catch(err => res.status(500).json(err,{message: 'Internal server error'}));
+
+});
+
+
+
 
 //route which takes in the year
 //and passes the risk strategies gain values for that year
@@ -89,7 +103,7 @@ router.get('/invest/:year', jwtAuth, (req, res) => {
 
 //endpoint to check that the Risk database has data in it
 //not used by the client
-router.get('/:risk', (req, res) => {
+router.get('/:risk', jwtAuth, (req, res) => {
 	console.log('enter get /risk', req.params.risk);
 	//get risk level values and return
 	return Risk.find({}).where('risk').equals(req.params.risk)

@@ -159,6 +159,24 @@ describe('/api/risk/invest', function() {
 							throw err;
 					});
 			});
+			it('Should return all strategies based on risk', function () {
+				return chai
+					.request(app)
+					.get('/api/risk/market/' + risk)
+					.set('Authorization', `Bearer ${receivedToken}`)
+					.send({
+						risk
+					})
+					.then(res => {
+						expect(res).to.have.status(200);
+						expect(res.body).to.be.an('array');
+						expect('array').to.have.lengthOf(5);
+					})
+					.catch(err => {
+						if ( err instanceof chai.AssertionError)
+							throw err;
+					});
+			});
 		});
 	});
 });

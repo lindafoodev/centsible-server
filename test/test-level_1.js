@@ -8,7 +8,6 @@ const {JWT_SECRET} = require('../config');
 const jwt = require('jsonwebtoken');
 const { app, closeServer } = require('../server');
 const { User } = require('../users');
-const passportStub = require('passport-stub');
 
 const expect = chai.expect;
 
@@ -16,9 +15,7 @@ const expect = chai.expect;
 // in our tests.
 // see: https://github.com/chaijs/chai-http
 chai.use(chaiHttp);
-passportStub.install(app);
 
-/*COMMENT OUT LEVEL 1 TEST - PATRICIA TO UPDATE BASED ON CHANGE TO RISK SCHEMA AND RISK DB/TEST DB NEEDS TO BE UPDATED WITH SAME SEED DATA (comment made by Linda) 
 
 describe('/api/risk/invest', function() {
 	const username = 'exampleUser';
@@ -28,10 +25,13 @@ describe('/api/risk/invest', function() {
 	const email = 'JoeSchmo@gmail.com';
 	const bday = '2/2/82';
 	const risk = 'high';
-	const year = 1;
+	const year = '1';
+	const year1 = 1;
 	const currentFund = 5200;
 	let receivedToken;
- 
+	const gain = 16.28;
+	const yearEndBalance = 5814;
+	const amtChange = 814; 
   
 	before(function() {
 		console.log('runServer for tests');
@@ -99,7 +99,7 @@ describe('/api/risk/invest', function() {
 						expect(res.body).to.be.an('object');
 						expect(res.body.username).to.equal(username);
 						expect(res.body.risk[0].strategy).to.equal(risk);
-						expect(res.body.year).to.equal(year);
+						expect(res.body.year).to.equal(year1);
 					});
 			});
 			it('Should reject for missing field in body', function() {
@@ -138,7 +138,27 @@ describe('/api/risk/invest', function() {
 						expect(res.body).to.be.an('array');
 					});
 			});
+			it('Should return all the Risk values from the database', function () {
+				return chai
+					.request(app)
+					.get('/api/risk/market/all')
+					.set('Authorization', `Bearer ${receivedToken}`)
+					.send({
+					})
+					.then(res => {
+						expect(res).to.have.status(200);
+						expect(res.body).to.be.an('array');
+						expect(res.body.risk[0].year).to.equal(year);
+						expect(res.body.risk[0].gain).to.equal(gain);
+						expect(res.body.risk[0].risk).to.equal(risk);
+						expect(res.body.risk[0].yearEndBalance).to.equal(yearEndBalance);
+						expect(res.body.risk[0].amtChange).to.equal(amtChange);
+					})
+					.catch(err =>{
+						if (err instanceof chai.AssertionError)
+							throw err;
+					});
+			});
 		});
 	});
 });
-*/

@@ -97,10 +97,16 @@ router.get('/:risk', (req, res) => {
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-router.get('/market/all', (req, res) => {
+
+//endpoint which will return all the Risk data
+router.get('/market/all', jwtAuth, (req, res) => {
+	console.log('Enter the market/all endpoint');
 	return Risk.find({})
-	.then(values => res.json(values))
-	.catch(err => res.status(500).json({message: 'Internal server error'}));
+		.then(values => {
+			console.log('risk values = ', values);
+			return res.json(values);
+		})
+		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
 module.exports = {router};

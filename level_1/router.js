@@ -113,7 +113,7 @@ router.get('/:risk', jwtAuth, (req, res) => {
 
 
 //endpoint which will return all the Risk data
-router.get('/all/master', jwtAuth, (req, res) => {
+router.get('/all/market', jwtAuth, (req, res) => {
 	console.log('Enter the market/all endpoint');
 	return Risk.find({})
 		.then(values => {

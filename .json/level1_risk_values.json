@@ -29,36 +29,6 @@
   "y": 5000,
   "amtChange": 0  
 },{
-  "x": "6", 
-  "gain": "0",
-  "risk": "mattress",
-  "y": 5000,
-  "amtChange": 0
-},{
-  "x": "7", 
-  "gain": "0",
-  "risk": "mattress",
-  "y": 5000,
-  "amtChange": 0  
-},{
-  "x": "8", 
-  "gain": "0",
-  "risk": "mattress",
-  "y": 5000,
-  "amtChange": 0  
-},{
-  "x": "9", 
-  "gain": "0",
-  "risk": "mattress",
-  "y": 5000,
-  "amtChange": 0  
-},{
-  "x": "10", 
-  "gain": "0",
-  "risk": "mattress",
-  "y": 5000,
-  "amtChange": 0  
-},{
   "x": "1", 
   "gain": "7.46",
   "risk": "high",
@@ -89,40 +59,6 @@
 {
   "x": "5", 
   "gain": "-2.28",
-  "risk": "high",
-  "y": null,
-  "amtChange": null  
-},{
-  "x": "6", 
-  "gain": "14.38",
-  "risk": "high",
-  "y": null,
-  "amtChange": null  
-},
-{
-  "x": "7", 
-  "gain": "21.2",
-  "risk": "high",
-  "y": null,
-  "amtChange": null  
-},
-{
-  "x": "8", 
-  "gain": "7.18",
-  "risk": "high",
-  "y": null,
-  "amtChange": null  
-},
-{
-  "x": "9", 
-  "gain": "-1.17",
-  "risk": "high",
-  "y": null,
-  "amtChange": null  
-},
-{
-  "x": "10", 
-  "gain": "8.33",
   "risk": "high",
   "y": null,
   "amtChange": null  
@@ -161,40 +97,6 @@
   "y": null,
   "amtChange": null  
 },{
-  "x": "6", 
-  "gain": "11.49",
-  "risk": "moderate",
-  "y": null,
-  "amtChange": null  
-},
-{
-  "x": "7", 
-  "gain": "18.1",
-  "risk": "moderate",
-  "y": null,
-  "amtChange": null  
-},
-{
-  "x": "8", 
-  "gain": "9.99",
-  "risk": "moderate",
-  "y": null,
-  "amtChange": null  
-},
-{
-  "x": "9", 
-  "gain": ".51",
-  "risk": "moderate",
-  "y": null,
-  "amtChange": null  
-},
-{
-  "x": "10", 
-  "gain": "8.77",
-  "risk": "moderate",
-  "y": null,
-  "amtChange": null  
-},{
   "x": "1", 
   "gain": "8.18",
   "risk": "low",
@@ -225,40 +127,6 @@
 {
   "x": "5", 
   "gain": "1.31",
-  "risk": "low",
-  "y": null,
-  "amtChange": null  
-},{
-  "x": "6", 
-  "gain": "12.15",
-  "risk": "low",
-  "y": null,
-  "amtChange": null  
-},
-{
-  "x": "7", 
-  "gain": "12.27",
-  "risk": "low",
-  "y": null,
-  "amtChange": null  
-},
-{
-  "x": "8", 
-  "gain": "6.7",
-  "risk": "low",
-  "y": null,
-  "amtChange": null  
-},
-{
-  "x": "9", 
-  "gain": "1.38",
-  "risk": "low",
-  "y": null,
-  "amtChange": null  
-},
-{
-  "x": "10", 
-  "gain": "3.17",
   "risk": "low",
   "y": null,
   "amtChange": null  

@@ -13,6 +13,23 @@ passport.use(jwtStrategy);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
+
+//endpoint updates the user intro to be true
+router.put('/intro', jwtAuth, (req, res) => {
+	const id = req.user.id;
+	console.log('user id in intro endpoint', id);
+
+	User.findByIdAndUpdate(id, {intro: true}, {upsert: true, new: true})
+		
+	.then(user => {
+			console.log(user);
+			res.json(user);
+	})
+	.catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
+
+
 //endpoint takes in risk, year, and currentFund
 //and updates the User database with a new currentFund,
 //initialFund and previousFund

@@ -178,7 +178,15 @@ router.get('/', (req, res) => {
 
 //clear user information due to a restart of Level 1
 router.put('/restart', jwtAuth, (req, res) => {
-	return User.findByIdAndUpdate(req.user.id, req.body, {new: true})
+	console.log('Enter PUT/restart');
+	const updateObj = {
+		initialFund: 5000,
+		currentFund: 5000,
+		previousFund: 0,
+		risk: [],
+		year: 0,
+	};
+	return User.findByIdAndUpdate(req.user.id, {$set:{updateObj}}, {new: true})
 		.then(user => res.json(user))
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });

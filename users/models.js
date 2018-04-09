@@ -51,6 +51,7 @@ UserSchema.methods.serialize = function() {
         currentFund: this.currentFund,
         previousFund: this.previousFund,
 		risk: this.risk,
+		intro: this.intro,
 		year: this.year,
 	};
 };

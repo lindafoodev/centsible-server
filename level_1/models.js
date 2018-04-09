@@ -3,16 +3,21 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const RiskSchema = mongoose.Schema ({
-	year: String,
+	x: String,
 	gain: Number,
-	risk: String 
+	risk: String,
+	y: Number,
+	amtChange: Number,
 });
 
 RiskSchema.methods.serialize = function() {
 	return {
-		year: this.year,
+		x: this.x,
 		gain: this.gain,
-		risk: this.risk
+		risk: this.risk,
+		y: this.y,
+		amtChange: this.amtChange,
+
 	};
 };
 

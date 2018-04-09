@@ -1,0 +1,142 @@
+[
+    {
+        "x": "6",
+        "gain": 9.47,
+        "risk": "Google",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "7",
+        "gain": 10.18,
+        "risk": "Google",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "8",
+        "gain": 55.05,
+        "risk": "Google",
+        "y": null,
+        "amtChange": null
+    },
+    {
+        "x": "9",
+        "gain": -5.06,
+        "risk": "Google",
+        "y": null,
+        "amtChange": null
+    },
+    {
+        "x": "10",
+        "gain": 41.23,
+        "risk": "Google",
+        "y": null,
+        "amtChange": null
+    },
+    {
+        "x": "6",
+        "gain": 19.83,
+        "risk": "AutoZone",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "7",
+        "gain": 8.93,
+        "risk": "AutoZone",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "8",
+        "gain": 33.80,
+        "risk": "AutoZone",
+        "y": null,
+        "amtChange": null
+    },
+    {
+        "x": "9",
+        "gain": 30.63,
+        "risk": "AutoZone",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "10",
+        "gain": 17.47,
+        "risk": "AutoZone",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "6",
+        "gain": 27.58,
+        "risk": "Electronic Arts",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "7",
+        "gain": -29.83,
+        "risk": "Electronic Arts",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "8",
+        "gain": 55.04,
+        "risk": "Electronic Arts",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "9",
+        "gain": 106.07,
+        "risk": "Electronic Arts",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "10",
+        "gain": 42.36,
+        "risk": "Electronic Arts",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "6",
+        "gain": 48.96,
+        "risk": "Dollar Tree",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "7",
+        "gain": -2.68,
+        "risk": "Dollar Tree",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "8",
+        "gain": 36.33,
+        "risk": "Dollar Tree",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "9",
+        "gain": 26.70,
+        "risk": "Dollar Tree",
+        "y": null,
+        "amtChange": null
+    }, 
+    {
+        "x": "10",
+        "gain": 8.32,
+        "risk": "Dollar Tree",
+        "y": null,
+        "amtChange": null
+    }
+]

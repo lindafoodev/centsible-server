@@ -141,7 +141,7 @@ describe('/api/risk/invest', function() {
 			it('Should return all the Risk values from the database', function () {
 				return chai
 					.request(app)
-					.get('/api/risk/market/all')
+					.get('/api/risk/all/market')
 					.set('Authorization', `Bearer ${receivedToken}`)
 					.send({
 					})

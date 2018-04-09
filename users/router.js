@@ -102,8 +102,8 @@ router.post('/', jsonParser, (req, res) => {
 
 	let {username, password, firstName = '', lastName = '', email, bday} = req.body;
 	let risk = [{
-		"x": 0,
-		"y": 5000,
+		'x': 0,
+		'y': 5000,
 
 	}];
 	let intro = false;
@@ -172,6 +172,13 @@ router.get('/:id', jwtAuth, (req, res) => {
 router.get('/', (req, res) => {
 	//all users
 	return User.find({})
+		.then(user => res.json(user))
+		.catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
+//clear user information due to a restart of Level 1
+router.put('/restart', jwtAuth, (req, res) => {
+	return User.findByIdAndUpdate(req.user.id, req.body, {new: true})
 		.then(user => res.json(user))
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });

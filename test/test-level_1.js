@@ -24,7 +24,7 @@ describe('/api/risk/invest', function() {
 	const firstName = 'Example';
 	const email = 'JoeSchmo@gmail.com';
 	const bday = '2/2/82';
-	const risk = 'high';
+	const risk = 'Aggressive';
 	const year = '1';
 	const year1 = 1;
 	const currentFund = 5200;

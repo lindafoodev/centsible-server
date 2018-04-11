@@ -170,6 +170,7 @@ router.get('/:id', jwtAuth, (req, res) => {
 });
 
 router.get('/', (req, res) => {
+	console.log('enter get all user endpoint');
 	//all users
 	return User.find({})
 		.then(user => res.json(user))

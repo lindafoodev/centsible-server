@@ -18,7 +18,6 @@ const jwtAuth = passport.authenticate("jwt", { session: false });
 //initialFund and previousFund
 //sends back the User object to the client
 router.put("/invest", jwtAuth, (req, res) => {
-  console.log("enter the post api/level2/invest ", req.user.id);
   //validate the fields in the body
   const requiredFields = [
     "mattress",
@@ -45,116 +44,113 @@ router.put("/invest", jwtAuth, (req, res) => {
     });
   }
 
-  let {
-    mattress,
-    conservative,
-    moderate,
-    aggressive,
-    google,
-    autoZone,
-    dollarTree,
-    ea,
-    year,
-    currentFund
-  } = req.body;
+let { 
+    mattress, 
+		conservative, 
+		moderate, 
+		aggressive, 
+		google, 
+		autoZone, 
+		dollarTree, 
+		ea, 
+		year, 
+		currentFund } = req.body;
 
-  let newCurrentFundAmt = 0;
-  let totalFundIncrease = 0;
-  let fundsInvested = 0;
-  let fund_gain_loss = 0;
+	let newCurrentFundAmt = 0;
+	let totalFundIncrease = 0;
+	let fundsInvested = 0;
+	let fund_gain_loss = 0;
 
-  //get the % increase/decrease from the Risk Db. This value
-  //is determined by the year and risk level
-  return Risk.find({
-    x: { $in: [year] }
-  })
-    .then(riskData => {
-      console.log("riskData = ", riskData);
-      for (let i = 0; i < riskData.length; i++) {
-        switch (riskData[i].risk) {
-          case "Google":
-            fundsInvested = currentFund * google;
-            break;
+	//get the % increase/decrease from the Risk Db. This value
+	//is determined by the year and risk level
+	return Risk.find({
+		x: { $in: [year] }
+	})
+		.then(riskData => {
+			console.log('riskData = ', riskData);
+			for (let i= 0; i < riskData.length; i++ ){
+				switch (riskData[i].risk){
+				case 'Google':
+					fundsInvested = currentFund * parseFloat(google)/100;
+					break;
 
-          case "AutoZone":
-            fundsInvested = currentFund * autoZone;
-            break;
+				case 'AutoZone':
+					fundsInvested = currentFund * parseFloat(autoZone)/100;
+					break;
 
-          case "Electronic Arts":
-            fundsInvested = currentFund * ea;
-            break;
+				case 'Electronic Arts':
+					fundsInvested = currentFund * parseFloat(ea)/100;
+					break;
 
-          case "Dollar Tree":
-            fundsInvested = currentFund * dollarTree;
-            break;
+				case 'Dollar Tree':
+					fundsInvested = currentFund * parseFloat(dollarTree)/100;
+					break;
 
-          case "Mattress":
-            fundsInvested = currentFund * mattress;
-            break;
+				case 'Mattress':
+					fundsInvested = currentFund * parseFloat(mattress)/100;
+					break;
 
-          case "Aggressive":
-            fundsInvested = currentFund * aggressive;
-            break;
+				case 'Aggressive':
+					fundsInvested = currentFund * parseFloat(aggressive)/100;
+					break;
 
-          case "Moderate":
-            fundsInvested = currentFund * moderate;
-            break;
+				case 'Moderate':
+					fundsInvested = currentFund * parseFloat(moderate)/100;
+					break;
 
-          case "Conservative":
-            fundsInvested = currentFund * conservative;
-            break;
+				case 'Conservative':
+					fundsInvested = currentFund * parseFloat(conservative)/100;
+					break;
 
-          default:
-            break;
-        }
+				default:
+					break;
+				}
+				fund_gain_loss = fund_gain_loss + (fundsInvested + (Math.floor(riskData[i].gain / 100 * fundsInvested))); 
+			}
 
-        fund_gain_loss =
-          currentFund + Math.floor(riskData[i].gain / 100 * currentFund);
-        totalFundIncrease =
-          totalFundIncrease + (fund_gain_loss - fundsInvested);
-        newCurrentFundAmt = newCurrentFundAmt + totalFundIncrease;
-      }
-      let growth = (newCurrentFundAmt - currentFund) / currentFund * 100;
-      return User.findByIdAndUpdate(
-        req.user.id,
-        {
-          $set: {
-            currentFund: newCurrentFundAmt,
-            previousFund: currentFund,
-            year: year
-          },
-          $push: {
-            risk: {
-              x: year,
-              y: newCurrentFundAmt,
-              strategy: null,
-              previousYear: currentFund,
-              growth: growth
-            }
-          }
-        },
-        { new: true }
-      )
-        .then(data => {
-          console.log("user data being sent back ", data);
-          return res.status(200).json(data.serialize());
-        })
-        .catch(err => {
-          return res.status(500).json(err);
-        });
-    })
-    .catch(err => {
-      return res.status(500).json(err);
-    });
+			totalFundIncrease = fund_gain_loss-currentFund;
+			newCurrentFundAmt = Math.round(totalFundIncrease + currentFund);
+
+			let growth = Math.round(((newCurrentFundAmt - currentFund)/currentFund) * 100 *100)/100;
+
+			return User.findByIdAndUpdate(
+				req.user.id,
+				{
+					$set: {
+						currentFund: newCurrentFundAmt,
+						previousFund: currentFund,
+						year: year
+					},
+					$push: {
+						risk: {
+							x: year,
+							y: newCurrentFundAmt,
+							strategy: null,
+							previousYear: currentFund,
+							growth: growth
+						}
+					}
+				},
+				{ new: true }
+			)
+				.then(data => {
+					return res.status(200).json(data);
+				})
+				.catch(err => {
+					return res.status(500).json(err);
+				});
+		})
+		.catch(err => {
+			return res.status(500).json(err);
+		});
 });
 
 router.get("/:userid/:strat", (req, res) => {
   let id = req.params.userid;
 	if (req.params.userid === 'self'){
 	  id = req.user.id;
-	//   console.log(req.user);
 	}
-  User.findById(req.params.userid)
+  User.findById(id)
     .then(data => {
 	  Risk
 	  .find({ risk: { $in: [req.params.strat] } }).then(values => {
@@ -186,9 +182,7 @@ router.get('/:id', (req, res) => {
 	}
 	return User.findById(id)
 		.then(user => {
-			console.log(user);
-			const userMarket=user.risk.filter(year => year.x >= 6)
-			res.json(userMarket);
+			res.json(user);
 		})
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });

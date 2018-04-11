@@ -60,6 +60,7 @@ UserSchema.methods.serialize = function() {
 		intro: this.intro,
 		year: this.year,
 		year5Amt: this.year5Amt,
+		level2Intro: this.level2Intro
 	};
 };
 

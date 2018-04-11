@@ -1,8 +1,8 @@
 'use strict';
 
-exports.CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:3000',
-exports.DATABASE_URL = process.env.DATABASE_URL || 'mongod://localhost/investment-learning-database-test';
 
+exports.CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:3000',
+exports.DATABASE_URL = process.env.DATABASE_URL ||'mongodb://Jc:Asdfasdf1@ds123919.mlab.com:23919/teamthree',
 
 
 // 'mongodb://Jc:Asdfasdf1@ds123919.mlab.com:23919/teamthree',

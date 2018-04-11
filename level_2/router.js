@@ -14,7 +14,7 @@ passport.use(jwtStrategy);
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
 router.put('/invest', jwtAuth, (req, res) => {
-
+	console.log('enter api/level2/invest endpoint');
 	//validate the fields in the body
 	const requiredFields = ['mattress', 'conservative', 'moderate','aggressive', 'google', 'autoZone', 'dollarTree', 'ea','year','currentFund'];
     
@@ -56,49 +56,54 @@ router.put('/invest', jwtAuth, (req, res) => {
 			for (let i= 0; i < riskData.length; i++ ){
 				switch (riskData[i].risk){
 				case 'Google':
-					fundsInvested = currentFund * parseFloat(google);
+					fundsInvested = currentFund * parseFloat(google)/100;
 					break;
 
 				case 'AutoZone':
-					fundsInvested = currentFund * parseFloat(autoZone);
+					fundsInvested = currentFund * parseFloat(autoZone)/100;
 					break;
 
 				case 'Electronic Arts':
-					fundsInvested = currentFund * parseFloat(ea);
+					fundsInvested = currentFund * parseFloat(ea)/100;
 					break;
 
 				case 'Dollar Tree':
-					fundsInvested = currentFund * parseFloat(dollarTree);
+					fundsInvested = currentFund * parseFloat(dollarTree)/100;
 					break;
 
 				case 'Mattress':
-					fundsInvested = currentFund * parseFloat(mattress);
+					fundsInvested = currentFund * parseFloat(mattress)/100;
 					break;
 
 				case 'Aggressive':
-					fundsInvested = currentFund * parseFloat(aggressive);
+					fundsInvested = currentFund * parseFloat(aggressive)/100;
 					break;
 
 				case 'Moderate':
-					fundsInvested = currentFund * parseFloat(moderate);
+					fundsInvested = currentFund * parseFloat(moderate)/100;
 					break;
 
 				case 'Conservative':
-					fundsInvested = currentFund * parseFloat(conservative);
+					fundsInvested = currentFund * parseFloat(conservative)/100;
 					break;
 
 				default:
 					break;
 				}
-        
+				console.log('fund_gain_loss = ', fund_gain_loss);
 				fund_gain_loss = fund_gain_loss + (fundsInvested + (Math.floor(riskData[i].gain / 100 * fundsInvested))); 
+        
+				console.log('fund_gain_loss running total = ', fund_gain_loss);
 			}
 
 			totalFundIncrease = fund_gain_loss-currentFund;
-			newCurrentFundAmt = totalFundIncrease + currentFund;
+			newCurrentFundAmt = Math.round(totalFundIncrease + currentFund);
+      
+			console.log('totalFundIncrease, newCurrentFundAmt = ', totalFundIncrease, newCurrentFundAmt);
 
 
-			let growth = ((newCurrentFundAmt - currentFund)/currentFund) * 100;
+			let growth = Math.round(((newCurrentFundAmt - currentFund)/currentFund) * 100 *100)/100;
+
 			return User.findByIdAndUpdate(
 				req.user.id,
 				{

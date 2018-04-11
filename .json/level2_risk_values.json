@@ -1,4 +1,146 @@
-[{
+
+[
+    {
+        "x": "6", 
+        "gain": "0",
+        "risk": "Mattress",
+        "y": null,
+        "amtChange": null
+    },
+    {
+        "x": "7", 
+        "gain": "0",
+        "risk": "Mattress",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "8", 
+        "gain": "0",
+        "risk": "Mattress",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "9", 
+        "gain": "0",
+        "risk": "Mattress",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "10", 
+        "gain": "0",
+        "risk": "Mattress",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "6", 
+        "gain": "12.15",
+        "risk": "Conservative",
+        "y": null,
+        "amtChange": null
+    },
+    {
+        "x": "7", 
+        "gain": "12.27",
+        "risk": "Conservative",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "8", 
+        "gain": "6.7",
+        "risk": "Conservative",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "9", 
+        "gain": "1.38",
+        "risk": "Conservative",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "10", 
+        "gain": "3.17",
+        "risk": "Conservative",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "6", 
+        "gain": "11.49",
+        "risk": "Moderate",
+        "y": null,
+        "amtChange": null
+    },
+    {
+        "x": "7", 
+        "gain": "18.1",
+        "risk": "Moderate",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "8", 
+        "gain": "9.99",
+        "risk": "Moderate",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "9", 
+        "gain": "0.51",
+        "risk": "Moderate",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "10", 
+        "gain": "8.77",
+        "risk": "Moderate",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "6", 
+        "gain": "14.38",
+        "risk": "Aggressive",
+        "y": null,
+        "amtChange": null
+    },
+    {
+        "x": "7", 
+        "gain": "21.2",
+        "risk": "Aggressive",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "8", 
+        "gain": "7.18",
+        "risk": "Aggressive",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "9", 
+        "gain": "-1.17",
+        "risk": "Aggressive",
+        "y": null,
+        "amtChange": null  
+    },
+    {
+        "x": "10", 
+        "gain": "8.33",
+        "risk": "Aggressive",
+        "y": null,
+        "amtChange": null  
+    },
+    {
         "x": "6",
         "gain": 9.47,
         "risk": "Google",

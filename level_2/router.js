@@ -1,36 +1,51 @@
-'use strict';
-const express = require('express');
-const bodyParser = require('body-parser');
-const passport = require('passport');
-const { Risk } = require('../level_1/models');
-const { User } = require('../users/models');
-const { localStrategy, jwtStrategy } = require('../auth/strategies');
+"use strict";
+const express = require("express");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const { Risk } = require("../level_1/models");
+const { User } = require("../users/models");
+const { localStrategy, jwtStrategy } = require("../auth/strategies");
 const router = express.Router();
 router.use(bodyParser.json());
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-const jwtAuth = passport.authenticate('jwt', { session: false });
+const jwtAuth = passport.authenticate("jwt", { session: false });
 
-router.put('/invest', jwtAuth, (req, res) => {
-	console.log('enter api/level2/invest endpoint');
-	//validate the fields in the body
-	const requiredFields = ['mattress', 'conservative', 'moderate','aggressive', 'google', 'autoZone', 'dollarTree', 'ea','year','currentFund'];
-    
-	const missingField = requiredFields.find(field => !(field in req.body));
+//endpoint takes in risk, year, and currentFund
+//and updates the User database with a new currentFund,
+//initialFund and previousFund
+//sends back the User object to the client
+router.put("/invest", jwtAuth, (req, res) => {
+  //validate the fields in the body
+  const requiredFields = [
+    "mattress",
+    "conservative",
+    "moderate",
+    "aggressive",
+    "google",
+    "autoZone",
+    "dollarTree",
+    "ea",
+    "year",
+    "currentFund"
+  ];
 
-	if (missingField) {
-		console.log('missing field = ', missingField);
-		return res.status(422).json({
-			code: 422,
-			reason: 'ValidationError',
-			message: 'Missing field',
-			location: missingField
-		});
-	}
+  const missingField = requiredFields.find(field => !(field in req.body));
 
-	let { mattress, 
+  if (missingField) {
+    console.log("missing field = ", missingField);
+    return res.status(422).json({
+      code: 422,
+      reason: "ValidationError",
+      message: "Missing field",
+      location: missingField
+    });
+  }
+
+let { 
+    mattress, 
 		conservative, 
 		moderate, 
 		aggressive, 
@@ -90,17 +105,11 @@ router.put('/invest', jwtAuth, (req, res) => {
 				default:
 					break;
 				}
-				console.log('fund_gain_loss = ', fund_gain_loss);
 				fund_gain_loss = fund_gain_loss + (fundsInvested + (Math.floor(riskData[i].gain / 100 * fundsInvested))); 
-        
-				console.log('fund_gain_loss running total = ', fund_gain_loss);
 			}
 
 			totalFundIncrease = fund_gain_loss-currentFund;
 			newCurrentFundAmt = Math.round(totalFundIncrease + currentFund);
-      
-			console.log('totalFundIncrease, newCurrentFundAmt = ', totalFundIncrease, newCurrentFundAmt);
-
 
 			let growth = Math.round(((newCurrentFundAmt - currentFund)/currentFund) * 100 *100)/100;
 
@@ -136,4 +145,46 @@ router.put('/invest', jwtAuth, (req, res) => {
 		});
 });
 
-module.exports = {router};
+router.get("/:userid/:strat", (req, res) => {
+  let id = req.params.userid;
+	if (req.params.userid === 'self'){
+	  id = req.user.id;
+	}
+  User.findById(id)
+    .then(data => {
+	  Risk
+	  .find({ risk: { $in: [req.params.strat] } }).then(values => {
+		console.log(values);
+		const yr5 = data.year5Amt
+        const mappedArr = values.map(obj => {
+		//   console.log("mappedobj", obj);
+		//   use data.year5amt to get y's of every strat
+		  obj.amtChange = Math.floor(obj.gain/100 * yr5);
+		  obj.y = yr5 + obj.amtChange;
+		  yr5 = obj.y;
+		});
+		//new arr....do I need to start x at 0? or 5? do I need this at all?
+        const newArr = [{ x: 0, y: data.year5Amt }, ...mappedArr];
+        console.log("risk values = ", mappedArr);
+        return res.json(newArr);
+      });
+    })
+    .catch(err =>
+      res.status(500).json(err, { message: "Internal server error" })
+    );
+});
+
+router.get('/:id', (req, res) => {
+	let id = req.params.id;
+	if (req.params.id === 'self'){
+	  id = req.user.id;
+	//   console.log(req.user);
+	}
+	return User.findById(id)
+		.then(user => {
+			res.json(user);
+		})
+		.catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
+module.exports = { router };

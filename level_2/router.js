@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const { Risk } = require('./models');
+const { Risk } = require('../level_1/models');
 const { User } = require('../users/models');
 const { localStrategy, jwtStrategy } = require('../auth/strategies');
 const router = express.Router();

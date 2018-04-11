@@ -13,24 +13,10 @@ passport.use(jwtStrategy);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
-
-//endpoint takes in risk, year, and currentFund
-//and updates the User database with a new currentFund,
-//initialFund and previousFund
-//sends back the User object to the client
 router.put('/invest', jwtAuth, (req, res) => {
-	console.log('enter the post api/level2/invest ', req.user.id);
+
 	//validate the fields in the body
-	const requiredFields = ['mattress', 
-		'conservative', 
-		'moderate', 
-		'aggressive', 
-		'google', 
-		'autoZone', 
-		'dollarTree', 
-		'ea',
-		'year',
-		'currentFund'];
+	const requiredFields = ['mattress', 'conservative', 'moderate','aggressive', 'google', 'autoZone', 'dollarTree', 'ea','year','currentFund'];
     
 	const missingField = requiredFields.find(field => !(field in req.body));
 
@@ -70,45 +56,48 @@ router.put('/invest', jwtAuth, (req, res) => {
 			for (let i= 0; i < riskData.length; i++ ){
 				switch (riskData[i].risk){
 				case 'Google':
-					fundsInvested = currentFund * google;
+					fundsInvested = currentFund * parseFloat(google);
 					break;
 
 				case 'AutoZone':
-					fundsInvested = currentFund * autoZone;
+					fundsInvested = currentFund * parseFloat(autoZone);
 					break;
 
 				case 'Electronic Arts':
-					fundsInvested = currentFund * ea;
+					fundsInvested = currentFund * parseFloat(ea);
 					break;
 
 				case 'Dollar Tree':
-					fundsInvested = currentFund * dollarTree;
+					fundsInvested = currentFund * parseFloat(dollarTree);
 					break;
 
 				case 'Mattress':
-					fundsInvested = currentFund * mattress;
+					fundsInvested = currentFund * parseFloat(mattress);
 					break;
 
 				case 'Aggressive':
-					fundsInvested = currentFund * aggressive;
+					fundsInvested = currentFund * parseFloat(aggressive);
 					break;
 
 				case 'Moderate':
-					fundsInvested = currentFund * moderate;
+					fundsInvested = currentFund * parseFloat(moderate);
 					break;
 
 				case 'Conservative':
-					fundsInvested = currentFund * conservative;
+					fundsInvested = currentFund * parseFloat(conservative);
 					break;
 
 				default:
 					break;
 				}
-
-				fund_gain_loss = currentFund + (Math.floor(riskData[i].gain / 100 * currentFund)); 
-				totalFundIncrease = totalFundIncrease + (fund_gain_loss - fundsInvested);
-				newCurrentFundAmt = newCurrentFundAmt + totalFundIncrease;
+        
+				fund_gain_loss = fund_gain_loss + (fundsInvested + (Math.floor(riskData[i].gain / 100 * fundsInvested))); 
 			}
+
+			totalFundIncrease = fund_gain_loss-currentFund;
+			newCurrentFundAmt = totalFundIncrease + currentFund;
+
+
 			let growth = ((newCurrentFundAmt - currentFund)/currentFund) * 100;
 			return User.findByIdAndUpdate(
 				req.user.id,
@@ -131,8 +120,7 @@ router.put('/invest', jwtAuth, (req, res) => {
 				{ new: true }
 			)
 				.then(data => {
-					console.log('user data being sent back ', data);
-					return res.status(200).json(data.serialize());
+					return res.status(200).json(data);
 				})
 				.catch(err => {
 					return res.status(500).json(err);
@@ -142,3 +130,5 @@ router.put('/invest', jwtAuth, (req, res) => {
 			return res.status(500).json(err);
 		});
 });
+
+module.exports = {router};

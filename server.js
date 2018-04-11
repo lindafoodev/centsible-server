@@ -7,6 +7,7 @@ const passport = require('passport');
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 const { router: level1Router } = require('./level_1');
+const { router: level2Router } = require('./level_2');
 const {dbConnect} = require('./db-mongoose');
 
 mongoose.Promise = global.Promise;
@@ -35,6 +36,7 @@ passport.use(jwtStrategy);
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
 app.use('/api/risk/', level1Router);
+app.use('/api/level2/', level2Router);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 // A protected endpoint which needs a valid JWT to access it

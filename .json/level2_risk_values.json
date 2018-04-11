@@ -1,18 +1,17 @@
-[
-    {
+[{
         "x": "6",
         "gain": 9.47,
         "risk": "Google",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "7",
         "gain": 10.18,
         "risk": "Google",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "8",
         "gain": 55.05,
@@ -40,14 +39,14 @@
         "risk": "AutoZone",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "7",
         "gain": 8.93,
         "risk": "AutoZone",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "8",
         "gain": 33.80,
@@ -61,82 +60,215 @@
         "risk": "AutoZone",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "10",
         "gain": 17.47,
         "risk": "AutoZone",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "6",
         "gain": 27.58,
         "risk": "Electronic Arts",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "7",
         "gain": -29.83,
         "risk": "Electronic Arts",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "8",
         "gain": 55.04,
         "risk": "Electronic Arts",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "9",
         "gain": 106.07,
         "risk": "Electronic Arts",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "10",
         "gain": 42.36,
         "risk": "Electronic Arts",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "6",
         "gain": 48.96,
         "risk": "Dollar Tree",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "7",
         "gain": -2.68,
         "risk": "Dollar Tree",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "8",
         "gain": 36.33,
         "risk": "Dollar Tree",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "9",
         "gain": 26.70,
         "risk": "Dollar Tree",
         "y": null,
         "amtChange": null
-    }, 
+    },
     {
         "x": "10",
         "gain": 8.32,
         "risk": "Dollar Tree",
         "y": null,
         "amtChange": null
+    },
+    {
+        "x": "1",
+        "gain": "0",
+        "risk": "Mattress",
+        "y": 5000,
+        "amtChange": 0
+    }, {
+        "x": "2",
+        "gain": "0",
+        "risk": "Mattress",
+        "y": 5000,
+        "amtChange": 0
+    }, {
+        "x": "3",
+        "gain": "0",
+        "risk": "Mattress",
+        "y": 5000,
+        "amtChange": 0
+    }, {
+        "x": "4",
+        "gain": "0",
+        "risk": "Mattress",
+        "y": 5000,
+        "amtChange": 0
+    }, {
+        "x": "5",
+        "gain": "0",
+        "risk": "Mattress",
+        "y": 5000,
+        "amtChange": 0
+    }, {
+        "x": "1",
+        "gain": "7.46",
+        "risk": "Aggressive",
+        "y": 5373,
+        "amtChange": 373
+    },
+    {
+        "x": "2",
+        "gain": "-34.39",
+        "risk": "Aggressive",
+        "y": 3525,
+        "amtChange": -1848
+    },
+    {
+        "x": "3",
+        "gain": "24.99",
+        "risk": "Aggressive",
+        "y": 4406,
+        "amtChange": 881
+    },
+    {
+        "x": "4",
+        "gain": "15.06",
+        "risk": "Aggressive",
+        "y": 5070,
+        "amtChange": 664
+    },
+    {
+        "x": "5",
+        "gain": "-2.28",
+        "risk": "Aggressive",
+        "y": 4954,
+        "amtChange": -116
+    }, {
+        "x": "1",
+        "gain": "6.31",
+        "risk": "Moderate",
+        "y": 5316,
+        "amtChange": 316
+    },
+    {
+        "x": "2",
+        "gain": "-22.12",
+        "risk": "Moderate",
+        "y": 4140,
+        "amtChange": -1176
+    },
+    {
+        "x": "3",
+        "gain": "20.11",
+        "risk": "Moderate",
+        "y": 4972,
+        "amtChange": 832
+    },
+    {
+        "x": "4",
+        "gain": "13.29",
+        "risk": "Moderate",
+        "y": 5633,
+        "amtChange": 661
+    },
+    {
+        "x": "5",
+        "gain": "4.29",
+        "risk": "Moderate",
+        "y": 5875,
+        "amtChange": 242
+    }, {
+        "x": "1",
+        "gain": "8.18",
+        "risk": "Conservative",
+        "y": 5409,
+        "amtChange": 409
+    },
+    {
+        "x": "2",
+        "gain": "-21.31",
+        "risk": "Conservative",
+        "y": 4256,
+        "amtChange": -1153
+    },
+    {
+        "x": "3",
+        "gain": "23.15",
+        "risk": "Conservative",
+        "y": 5242,
+        "amtChange": 985
+    },
+    {
+        "x": "4",
+        "gain": "12.91",
+        "risk": "Conservative",
+        "y": 5918,
+        "amtChange": 677
+    },
+    {
+        "x": "5",
+        "gain": "1.31",
+        "risk": "Conservative",
+        "y": 5996,
+        "amtChange": 78
     }
 ]

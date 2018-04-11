@@ -29,12 +29,18 @@ const UserSchema = mongoose.Schema({
 		previousYear: {type: Number}
 	}],
 	intro: {type: Boolean, default: false},
-	year: { type: Number, default: 0 }
+	year: { type: Number, default: 0 },
+	year5Amt: {type: Number, default: 0},
+	level2Intro: {type: Boolean, default: false}
 });
 
 
 UserSchema.virtual('riskArr').get(function() {
-	return `${this.risk.x} ${this.risk.y}`.trim();
+	return `${this.risk.x} 
+          ${this.risk.y} 
+          ${this.risk.strategy} 
+          ${this.risk.growth} 
+          ${this.risk.previousYear}`.trim();
 });
 
 // I'M SO LOST
@@ -48,11 +54,12 @@ UserSchema.methods.serialize = function() {
 		email: this.email,
 		level: this.level,
 		initialFund: this.initialFund,
-        currentFund: this.currentFund,
-        previousFund: this.previousFund,
+		currentFund: this.currentFund,
+		previousFund: this.previousFund,
 		risk: this.risk,
 		intro: this.intro,
 		year: this.year,
+		year5Amt: this.year5Amt,
 	};
 };
 

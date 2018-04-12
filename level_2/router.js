@@ -183,20 +183,6 @@ router.get("/all/:yr5Amt", (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.get("/:id", (req, res) => {
-  let id = req.params.id;
-  if (req.params.id === "self") {
-    id = req.user.id;
-    //   console.log(req.user);
-  }
-  return User.findById(id)
-    .then(user => {
-      // const market =user.risk.filter(obj => obj.x >= 6)
-      res.json(user);
-    })
-    .catch(err => res.status(500).json({ message: "Internal server error" }));
-});
-
 router.get("/:year5Amt", jwtAuth, (req, res) => {
   return User.findByIdAndUpdate(
     req.user.id,

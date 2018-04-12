@@ -183,7 +183,7 @@ router.get("/all/:yr5Amt", (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.get("/:year5Amt", jwtAuth, (req, res) => {
+router.put("/:year5Amt", jwtAuth, (req, res) => {
   return User.findByIdAndUpdate(
     req.user.id,
     {

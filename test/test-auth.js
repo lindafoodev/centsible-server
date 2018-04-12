@@ -36,7 +36,7 @@ describe('Auth endpoints', function () {
   
 	after(function() {
 		console.log('closing server after tests');
-		//  closeServer();
+		 closeServer();
 		return dbDisconnect();
 	});
 
@@ -71,7 +71,7 @@ describe('Auth endpoints', function () {
 					}
 
 					const res = err.response;
-					expect(res).to.have.status(400);
+					expect(res).to.have.status(400).done();
 				});
 		});
 		it('Should reject requests with incorrect usernames', function () {
@@ -88,7 +88,7 @@ describe('Auth endpoints', function () {
 					}
 
 					const res = err.response;
-					expect(res).to.have.status(401);
+					expect(res).to.have.status(401).done();
 				});
 		});
 		it('Should reject requests with incorrect passwords', function () {
@@ -105,7 +105,7 @@ describe('Auth endpoints', function () {
 					}
 
 					const res = err.response;
-					expect(res).to.have.status(401);
+					expect(res).to.have.status(401).done();
 				});
 		});
 		it('Should return a valid auth token', function () {
@@ -122,7 +122,7 @@ describe('Auth endpoints', function () {
 						algorithm: ['HS256']
 					});
 					const decoded = jwt.decode(token);
-					expect(payload.exp).to.be.at.least(decoded.exp);
+					expect(payload.exp).to.be.at.least(decoded.exp).done();
 				});
 		});
 	});
@@ -141,7 +141,7 @@ describe('Auth endpoints', function () {
 					}
 
 					const res = err.response;
-					expect(res).to.have.status(401);
+					expect(res).to.have.status(401).done();
 				});
 		});
 		it('Should reject requests with an invalid token', function () {
@@ -171,7 +171,7 @@ describe('Auth endpoints', function () {
 					}
 
 					const res = err.response;
-					expect(res).to.have.status(401);
+					expect(res).to.have.status(401).done();
 				});
 		});
 		it('Should reject requests with an expired token', function () {
@@ -204,7 +204,7 @@ describe('Auth endpoints', function () {
 					}
 
 					const res = err.response;
-					expect(res).to.have.status(401);
+					expect(res).to.have.status(401).done();
 				});
 		});
 		it('Should return a valid auth token with a newer expiry date', function () {
@@ -254,7 +254,7 @@ describe('Auth endpoints', function () {
 						currentFund,
 						risk
 					});
-					expect(payload.exp).to.be.at.least(decoded.exp);
+					expect(payload.exp).to.be.at.least(decoded.exp).done();
 				});
 		});
 	});

@@ -54,7 +54,7 @@ describe('/api/user', function() {
 
 	afterEach(function () {
 		console.log('remove user');
-		return User.removeUser(username);
+		return User.dropUser(username);
 	});
 
 

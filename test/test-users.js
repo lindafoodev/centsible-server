@@ -29,12 +29,12 @@ describe('/api/user', function() {
  
 	before(function() {
 		console.log('runServer for tests');
-		return dbConnect(TEST_DATABASE_URL);
+		// return dbConnect(TEST_DATABASE_URL);
 	});
 
 	after(function() {
 		console.log('closing server after tests');
-		// closeServer();
+		closeServer();
 		return dbDisconnect();
 	});
 

@@ -55,7 +55,7 @@ describe('Auth endpoints', function () {
 	});
 
 	afterEach(function () {
-		return User.remove({});
+		return User.removeUser(username);
 	});
 
 	describe('/api/auth/login', function () {

@@ -79,7 +79,7 @@ describe('/api/risk/invest', function() {
 
 
 	afterEach(function () {
-		return User.remove({});
+		return User.removeUser(username);
 	});
 	
 

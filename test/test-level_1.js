@@ -6,7 +6,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const {JWT_SECRET} = require('../config');
 const jwt = require('jsonwebtoken');
-const { app, closeServer } = require('../server');
+const { app, closeServer, runServer } = require('../server');
 const { User } = require('../users');
 
 const expect = chai.expect;
@@ -35,6 +35,7 @@ describe('/api/risk/invest', function() {
   
 	before(function() {
 		console.log('runServer for tests');
+		runServer();
 		return dbConnect(TEST_DATABASE_URL);
 	});
   

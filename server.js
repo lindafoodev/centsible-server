@@ -86,8 +86,12 @@ function closeServer() {
 			}
 			resolve();
 		});
-	});
+	})
+		.catch(err =>{
+			return console.log(err);
+		});
 }
+
 
 // if server.js is called directly (aka, with `node server.js`), this block
 // runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.

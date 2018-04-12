@@ -56,7 +56,6 @@ router.put('/invest', jwtAuth, (req, res) => {
 		x: { $in: [year] }
 	})
 		.then(riskData => {
-			console.log('find from riskData Db = ', riskData[0].gain);
 			let growth = riskData[0].gain;
 			newFundAmt =
         currentFund + Math.floor(riskData[0].gain / 100 * currentFund);
@@ -82,7 +81,6 @@ router.put('/invest', jwtAuth, (req, res) => {
 				{ new: true }
 			)
 				.then(data => {
-					console.log('user data being sent back ', data);
 					return res.status(200).json(data.serialize());
 				})
 				.catch(err => {
@@ -97,12 +95,10 @@ router.put('/invest', jwtAuth, (req, res) => {
 //route which takes in the year
 //and passes the risk strategies gain values for that year
 router.get('/invest/:year', (req, res) => {
-	console.log('Enter the GET /invest/:year endpoint year = ', req.params.year);
 	return Risk.find({
 		x: { $in: [req.params.year] }
 	})
 		.then(data => {
-			console.log('data back from risk.find ', data);
 			return res.json(data);
 		})
 		.catch(err => {
@@ -113,7 +109,6 @@ router.get('/invest/:year', (req, res) => {
 //endpoint to check that the Risk database has data in it
 //not used by the client
 router.get('/:risk',  (req, res) => {
-	console.log('enter get /risk', req.params.risk);
 	//get risk level values and return
 	return Risk.find({})
 		.where('risk')
@@ -124,7 +119,6 @@ router.get('/:risk',  (req, res) => {
 
 //endpoint which will return all the Risk data
 router.get('/all/market',  (req, res) => {
-	console.log('Enter the market/all endpoint');
 	return Risk.find({})
 		.then(values => {
 			console.log('risk values = ', values);
@@ -134,7 +128,6 @@ router.get('/all/market',  (req, res) => {
 });
 
 router.get('/market/:strat', jwtAuth, (req, res) => {
-	console.log('Enter the market/optimal endpoint');
 	return Risk.find({ risk: { $in: [req.params.strat] } })
 		.then(values => {
 			const newArr = [{ x: 0, y: 5000 }, ...values];

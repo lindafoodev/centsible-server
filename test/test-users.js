@@ -34,7 +34,7 @@ describe('/api/user', function() {
 
 	after(function() {
 		console.log('closing server after tests');
-		closeServer();
+		// closeServer();
 		return dbDisconnect();
 	});
 

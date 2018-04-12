@@ -31,7 +31,7 @@ describe('Protected endpoint', function() {
   
 	after(function() {
 		console.log('closing server after tests');
-		closeServer();
+		// closeServer();
 		return dbDisconnect();
 	});
 

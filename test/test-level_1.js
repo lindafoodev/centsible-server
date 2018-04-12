@@ -85,23 +85,23 @@ describe('/api/risk/invest', function() {
 
 	describe('/api/risk/invest', function() {
 		describe('PUT', function() {
-			it('Should update and return User data', function () {
-				return chai
-					.request(app)
-					.put('/api/risk/invest')
-					.set('authorization', `Bearer ${receivedToken} `)
-					.send({
-						risk,
-						year,
-						currentFund,
-					})
-					.then(res => {
-						expect(res).to.be.status(200);
-						expect(res.body).to.be.an('object');
-						expect(res.body.username).to.equal(username);
-						expect(res.body.year).to.equal(year);
-					});
-			});
+			// it('Should update and return User data', function () {
+			// 	return chai
+			// 		.request(app)
+			// 		.put('/api/risk/invest')
+			// 		.set('authorization', `Bearer ${receivedToken} `)
+			// 		.send({
+			// 			risk,
+			// 			year,
+			// 			currentFund,
+			// 		})
+			// 		.then(res => {
+			// 			expect(res).to.be.status(200);
+			// 			expect(res.body).to.be.an('object');
+			// 			expect(res.body.username).to.equal(username);
+			// 			expect(res.body.year).to.equal(year);
+			// 		});
+			// });
 			it('Should reject for missing field in body', function() {
 				return chai
 					.request(app)

@@ -30,7 +30,7 @@ router.put('/intro', jwtAuth, (req, res) => {
 //initialFund and previousFund
 //sends back the User object to the client
 router.put('/invest', jwtAuth, (req, res) => {
-	console.log('enter the post api/risk/invest ', req.user.id);
+	console.log('enter the post api/risk/invest ');
 	//validate the fields in the body
 	const requiredFields = ['risk', 'year', 'currentFund'];
 	const missingField = requiredFields.find(field => !(field in req.body));

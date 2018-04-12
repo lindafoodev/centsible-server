@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 'use strict';
 const {dbConnect, dbDisconnect} = require('../db-mongoose');
-const {TEST_DATABASE_URL} = require('../config');
+const {TEST_DATABASE_URL, API_BASE_URL} = require('../config');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');

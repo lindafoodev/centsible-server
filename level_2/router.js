@@ -17,6 +17,7 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 //and updates the User database with a new currentFund,
 //initialFund and previousFund
 //sends back the User object to the client
+
 router.put('/invest', jwtAuth, (req, res) => {
 	//validate the fields in the body
 	const requiredFields = [
@@ -145,46 +146,50 @@ router.put('/invest', jwtAuth, (req, res) => {
 		});
 });
 
-router.get('/:userid/:strat', (req, res) => {
-	let id = req.params.userid;
-	if (req.params.userid === 'self'){
-	  id = req.user.id;
-	}
-	User.findById(id)
-		.then(data => {
-	  Risk
-	  .find({ risk: { $in: [req.params.strat] } }).then(values => {
-					console.log(values);
-					const yr5 = data.year5Amt;
-					const mappedArr = values.map(obj => {
-						//   console.log("mappedobj", obj);
-						//   use data.year5amt to get y's of every strat
-		  obj.amtChange = Math.floor(obj.gain/100 * yr5);
-		  obj.y = yr5 + obj.amtChange;
-		  yr5 = obj.y;
-					});
-					//new arr....do I need to start x at 0? or 5? do I need this at all?
-					const newArr = [{ x: 0, y: data.year5Amt }, ...mappedArr];
-					console.log('risk values = ', mappedArr);
-					return res.json(newArr);
-				});
-		})
-		.catch(err =>
-			res.status(500).json(err, { message: 'Internal server error' })
-		);
-});
-
-router.get('/:id', (req, res) => {
-	let id = req.params.id;
-	if (req.params.id === 'self'){
-	  id = req.user.id;
-	//   console.log(req.user);
-	}
-	return User.findById(id)
-		.then(user => {
-			res.json(user);
-		})
-		.catch(err => res.status(500).json({message: 'Internal server error'}));
+ router.get("/all/:yr5Amt", (req, res) => {
+  Risk.find({ x: { $in : ['6','7','8','9','10'] } })
+    .then(values => {
+      // console.log(values);
+			let yr5 = {
+				'Dollar Tree': +req.params.yr5Amt,
+				'Mattress': +req.params.yr5Amt,
+				'Conservative': +req.params.yr5Amt,
+				'Moderate': +req.params.yr5Amt,
+				'Aggressive': +req.params.yr5Amt,
+				'Google': +req.params.yr5Amt,
+				'AutoZone': +req.params.yr5Amt,
+				'Electronic Arts': +req.params.yr5Amt
+			}
+			
+      const mappedArr = values.map(obj => {
+        //   console.log("mappedobj", obj);
+				//   use data.year5amt to get y's of every strat
+				// console.log(obj)
+        obj.amtChange = Math.floor(obj.gain / 100 * yr5[obj.risk]);
+        obj.y = yr5[obj.risk] + +obj.amtChange;
+				yr5[obj.risk] = obj.y;
+				return obj
+      });
+      // console.log("risk values = ", mappedArr);
+      // res.json(mappedArr);
+      res.status(201).json(mappedArr);
+    })
+    .catch(err =>
+      res.status(500).json(err)
+    );
+ });
+router.get("/:id", (req, res) => {
+  let id = req.params.id;
+  if (req.params.id === "self") {
+    id = req.user.id;
+    //   console.log(req.user);
+  }
+  return User.findById(id)
+    .then(user => {
+      // const market =user.risk.filter(obj => obj.x >= 6)
+      res.json(user);
+    })
+    .catch(err => res.status(500).json({ message: "Internal server error" }));
 });
 
 router.get('/:year5Amt', jwtAuth, (req, res) => {

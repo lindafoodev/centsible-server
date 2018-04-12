@@ -99,7 +99,6 @@ describe('/api/risk/invest', function() {
 						expect(res).to.be.status(200);
 						expect(res.body).to.be.an('object');
 						expect(res.body.username).to.equal(username);
-						expect(res.body.risk[0].strategy).to.equal(risk);
 						expect(res.body.year).to.equal(year1);
 					});
 			});
@@ -112,18 +111,16 @@ describe('/api/risk/invest', function() {
 						risk,
 						currentFund
 					})
-					.then(() =>
-						expect.fail(null, null, 'Request should not succeed')
-					)
-					.catch(err => {
-						if (err instanceof chai.AssertionError) {
-							throw err;
-						}
-						const res = err.response;
+					.then(res => {
 						expect(res).to.have.status(422);
 						expect(res.body.reason).to.equal('ValidationError');
 						expect(res.body.message).to.equal('Missing field');
 						expect(res.body.location).to.equal('year');
+					})
+					.catch(err => {
+						if (err instanceof chai.AssertionError) {
+							throw err;
+						}
 					});
 			});
 			it('Should return all the strategies by year', function () {

@@ -63,16 +63,13 @@ describe('Auth endpoints', function () {
 			return chai
 				.request(app)
 				.post('/api/auth/login')
-				.then(() =>
-					expect.fail(null, null, 'Request should not succeed')
-				)
+				.then(res => {
+					expect(res).to.have.status(400);
+				})
 				.catch(err => {
 					if (err instanceof chai.AssertionError) {
 						throw err;
 					}
-
-					const res = err.response;
-					expect(res).to.have.status(400);
 				});
 		});
 		it('Should reject requests with incorrect usernames', function () {
@@ -80,16 +77,13 @@ describe('Auth endpoints', function () {
 				.request(app)
 				.post('/api/auth/login')
 				.send({ username: 'wrongUsername', password })        
-				.then(() =>
-					expect.fail(null, null, 'Request should not succeed')
-				)
+				.then(res => {
+					expect(res).to.have.status(400);
+				})
 				.catch(err => {
 					if (err instanceof chai.AssertionError) {
 						throw err;
 					}
-
-					const res = err.response;
-					expect(res).to.have.status(401);
 				});
 		});
 		it('Should reject requests with incorrect passwords', function () {
@@ -97,16 +91,13 @@ describe('Auth endpoints', function () {
 				.request(app)
 				.post('/api/auth/login')
 				.send({ username, password: 'wrongPassword' })
-				.then(() =>
-					expect.fail(null, null, 'Request should not succeed')
-				)
+				.then(res => {
+					expect(res).to.have.status(400);
+				})
 				.catch(err => {
 					if (err instanceof chai.AssertionError) {
 						throw err;
 					}
-
-					const res = err.response;
-					expect(res).to.have.status(401);
 				});
 		});
 		it('Should return a valid auth token', function () {
@@ -133,16 +124,13 @@ describe('Auth endpoints', function () {
 			return chai
 				.request(app)
 				.post('/api/auth/refresh')
-				.then(() =>
-					expect.fail(null, null, 'Request should not succeed')
-				)
+				.then(res => {
+					expect(res).to.have.status(400);
+				})
 				.catch(err => {
 					if (err instanceof chai.AssertionError) {
 						throw err;
 					}
-
-					const res = err.response;
-					expect(res).to.have.status(401);
 				});
 		});
 		it('Should reject requests with an invalid token', function () {
@@ -163,16 +151,13 @@ describe('Auth endpoints', function () {
 				.request(app)
 				.post('/api/auth/refresh')
 				.set('Authorization', `Bearer ${token}`)
-				.then(() =>
-					expect.fail(null, null, 'Request should not succeed')
-				)
+				.then(res => {
+					expect(res).to.have.status(400);
+				})
 				.catch(err => {
 					if (err instanceof chai.AssertionError) {
 						throw err;
 					}
-
-					const res = err.response;
-					expect(res).to.have.status(401);
 				});
 		});
 		it('Should reject requests with an expired token', function () {
@@ -196,16 +181,13 @@ describe('Auth endpoints', function () {
 				.request(app)
 				.post('/api/auth/refresh')
 				.set('authorization', `Bearer ${token}`)
-				.then(() =>
-					expect.fail(null, null, 'Request should not succeed')
-				)
+				.then(res => {
+					expect(res).to.have.status(400);
+				})
 				.catch(err => {
 					if (err instanceof chai.AssertionError) {
 						throw err;
 					}
-
-					const res = err.response;
-					expect(res).to.have.status(401);
 				});
 		});
 		it('Should return a valid auth token with a newer expiry date', function () {

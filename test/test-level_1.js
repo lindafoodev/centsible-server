@@ -25,8 +25,8 @@ describe('/api/risk/invest', function() {
 	const email = 'JoeSchmo@gmail.com';
 	const bday = '2/2/82';
 	const risk = 'Aggressive';
-	const year = '1';
-	const year1 = 1;
+	// const year = '1';
+	const year = 1;
 	const currentFund = 5200;
 	let receivedToken;
 	const gain = 16.28;
@@ -83,12 +83,12 @@ describe('/api/risk/invest', function() {
 	});
 	
 
-	describe('/api/risk/intro', function() {
+	describe('/api/risk/invest', function() {
 		describe('PUT', function() {
 			it('Should update and return User data', function () {
 				return chai
 					.request(app)
-					.put('/api/risk/intro')
+					.put('/api/risk/invest')
 					.set('authorization', `Bearer ${receivedToken} `)
 					.send({
 						risk,
@@ -99,13 +99,13 @@ describe('/api/risk/invest', function() {
 						expect(res).to.be.status(200);
 						expect(res.body).to.be.an('object');
 						expect(res.body.username).to.equal(username);
-						expect(res.body.year).to.equal(year1);
+						expect(res.body.year).to.equal(year);
 					});
 			});
 			it('Should reject for missing field in body', function() {
 				return chai
 					.request(app)
-					.put('/api/risk/intro')
+					.put('/api/risk/invest')
 					.set('Authorization', `Bearer ${receivedToken}`)
 					.send({
 						risk,

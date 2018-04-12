@@ -59,7 +59,6 @@ describe('Protected endpoint', function() {
 				.request(app)
 				.get('/api/protected')
 				.then(res => {
-					expect.fail(null, null, 'Request should not succeed');
 					expect(res).to.have.status(401);
 				})
 				.catch(err => {
@@ -90,7 +89,6 @@ describe('Protected endpoint', function() {
 				.get('/api/protected')
 				.set('Authorization', `Bearer ${token}`)
 				.then(res => {
-					expect.fail(null, null, 'Request should not succeed');
 					expect(res).to.have.status(401);
 				})
 				.catch(err => {
@@ -123,7 +121,6 @@ describe('Protected endpoint', function() {
 				.get('/api/protected')
 				.set('authorization', `Bearer ${token}`)
 				.then(res => {
-					expect.fail(null, null, 'Request should not succeed');
 					expect(res).to.have.status(401);
 				})
 				.catch(err => {

@@ -38,7 +38,7 @@ describe('Auth endpoints', function () {
 	after(function() {
 		console.log('closing server after tests');
 		//  closeServer();
-		// return dbDisconnect();
+		return dbDisconnect(TEST_DATABASE_URL);
 	});
 
 	beforeEach(function() {

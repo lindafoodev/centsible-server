@@ -36,13 +36,13 @@ describe('/api/risk/invest', function() {
 	before(function() {
 		console.log('runServer for tests');
 		// runServer();
-		// return dbConnect(TEST_DATABASE_URL);
+		return dbConnect(TEST_DATABASE_URL);
 	});
   
 	after(function() {
 		console.log('closing server after tests');
 		// closeServer();
-		// return dbDisconnect(TEST_DATABASE_URL);
+		return dbDisconnect(TEST_DATABASE_URL);
 	});
 	//create a user, login the user, get the token, which is required for the protected endpoint tests
 	beforeEach(function() {

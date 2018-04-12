@@ -6,7 +6,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const {JWT_SECRET} = require('../config');
 const jwt = require('jsonwebtoken');
-const { app, closeServer } = require('../server');
+const { app, closeServer, runServer } = require('../server');
 const { User } = require('../users');
 
 const expect = chai.expect;
@@ -35,13 +35,14 @@ describe('/api/risk/invest', function() {
   
 	before(function() {
 		console.log('runServer for tests');
+		runServer();
 		return dbConnect(TEST_DATABASE_URL);
 	});
   
 	after(function() {
 		console.log('closing server after tests');
 		closeServer();
-		return dbDisconnect();
+		return dbDisconnect(TEST_DATABASE_URL);
 	});
 	//create a user, login the user, get the token, which is required for the protected endpoint tests
 	beforeEach(function() {

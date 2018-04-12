@@ -1,51 +1,51 @@
-"use strict";
-const express = require("express");
-const bodyParser = require("body-parser");
-const passport = require("passport");
-const { Risk } = require("../level_1/models");
-const { User } = require("../users/models");
-const { localStrategy, jwtStrategy } = require("../auth/strategies");
+'use strict';
+const express = require('express');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const { Risk } = require('../level_1/models');
+const { User } = require('../users/models');
+const { localStrategy, jwtStrategy } = require('../auth/strategies');
 const router = express.Router();
 router.use(bodyParser.json());
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-const jwtAuth = passport.authenticate("jwt", { session: false });
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
 //endpoint takes in risk, year, and currentFund
 //and updates the User database with a new currentFund,
 //initialFund and previousFund
 //sends back the User object to the client
-router.put("/invest", jwtAuth, (req, res) => {
-  //validate the fields in the body
-  const requiredFields = [
-    "mattress",
-    "conservative",
-    "moderate",
-    "aggressive",
-    "google",
-    "autoZone",
-    "dollarTree",
-    "ea",
-    "year",
-    "currentFund"
-  ];
+router.put('/invest', jwtAuth, (req, res) => {
+	//validate the fields in the body
+	const requiredFields = [
+		'mattress',
+		'conservative',
+		'moderate',
+		'aggressive',
+		'google',
+		'autoZone',
+		'dollarTree',
+		'ea',
+		'year',
+		'currentFund'
+	];
 
-  const missingField = requiredFields.find(field => !(field in req.body));
+	const missingField = requiredFields.find(field => !(field in req.body));
 
-  if (missingField) {
-    console.log("missing field = ", missingField);
-    return res.status(422).json({
-      code: 422,
-      reason: "ValidationError",
-      message: "Missing field",
-      location: missingField
-    });
-  }
+	if (missingField) {
+		console.log('missing field = ', missingField);
+		return res.status(422).json({
+			code: 422,
+			reason: 'ValidationError',
+			message: 'Missing field',
+			location: missingField
+		});
+	}
 
-let { 
-    mattress, 
+	let { 
+		mattress, 
 		conservative, 
 		moderate, 
 		aggressive, 
@@ -145,33 +145,33 @@ let {
 		});
 });
 
-router.get("/:userid/:strat", (req, res) => {
-  let id = req.params.userid;
+router.get('/:userid/:strat', (req, res) => {
+	let id = req.params.userid;
 	if (req.params.userid === 'self'){
 	  id = req.user.id;
 	}
-  User.findById(id)
-    .then(data => {
+	User.findById(id)
+		.then(data => {
 	  Risk
 	  .find({ risk: { $in: [req.params.strat] } }).then(values => {
-		console.log(values);
-		const yr5 = data.year5Amt
-        const mappedArr = values.map(obj => {
-		//   console.log("mappedobj", obj);
-		//   use data.year5amt to get y's of every strat
+					console.log(values);
+					const yr5 = data.year5Amt;
+					const mappedArr = values.map(obj => {
+						//   console.log("mappedobj", obj);
+						//   use data.year5amt to get y's of every strat
 		  obj.amtChange = Math.floor(obj.gain/100 * yr5);
 		  obj.y = yr5 + obj.amtChange;
 		  yr5 = obj.y;
-		});
-		//new arr....do I need to start x at 0? or 5? do I need this at all?
-        const newArr = [{ x: 0, y: data.year5Amt }, ...mappedArr];
-        console.log("risk values = ", mappedArr);
-        return res.json(newArr);
-      });
-    })
-    .catch(err =>
-      res.status(500).json(err, { message: "Internal server error" })
-    );
+					});
+					//new arr....do I need to start x at 0? or 5? do I need this at all?
+					const newArr = [{ x: 0, y: data.year5Amt }, ...mappedArr];
+					console.log('risk values = ', mappedArr);
+					return res.json(newArr);
+				});
+		})
+		.catch(err =>
+			res.status(500).json(err, { message: 'Internal server error' })
+		);
 });
 
 router.get('/:id', (req, res) => {
@@ -186,5 +186,23 @@ router.get('/:id', (req, res) => {
 		})
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });
+
+router.get('/:year5Amt', jwtAuth, (req, res) => {
+	return User.findByIdAndUpdate( req.user.id, 
+		{
+			$set: {
+				year5Amt: req.params.year5Amt
+			}
+		},
+		{new: true}
+	)
+		.then(user => {
+			res.json(user);
+		})
+		.catch( err => {
+			res.status(500).json({message: 'Internal server error'});
+		});
+});
+
 
 module.exports = { router };

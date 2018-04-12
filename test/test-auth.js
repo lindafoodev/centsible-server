@@ -55,7 +55,7 @@ describe('Auth endpoints', function () {
 	});
 
 	afterEach(function () {
-		return User.dropUser(username);
+		return User.remove({username: 'exampleUser'});
 	});
 
 	describe('/api/auth/login', function () {

@@ -49,7 +49,7 @@ describe('Protected endpoint', function() {
 	});
 
 	afterEach(function () {
-		return User.dropUser(username);
+		return User.remove({username: 'exampleUser'});
 	});
 	
 

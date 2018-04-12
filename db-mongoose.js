@@ -13,8 +13,8 @@ function dbConnect(url = DATABASE_URL) {
 		});
 }
 
-function dbDisconnect() {
-	return mongoose.disconnect();
+function dbDisconnect(url = DATABASE_URL) {
+	return mongoose.disconnect(url);
 }
 
 function dbGet() {

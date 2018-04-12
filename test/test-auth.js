@@ -78,7 +78,7 @@ describe('Auth endpoints', function () {
 				.post('/api/auth/login')
 				.send({ username: 'wrongUsername', password })        
 				.then(res => {
-					expect(res).to.have.status(400);
+					expect(res).to.have.status(401);
 				})
 				.catch(err => {
 					if (err instanceof chai.AssertionError) {
@@ -92,7 +92,7 @@ describe('Auth endpoints', function () {
 				.post('/api/auth/login')
 				.send({ username, password: 'wrongPassword' })
 				.then(res => {
-					expect(res).to.have.status(400);
+					expect(res).to.have.status(401);
 				})
 				.catch(err => {
 					if (err instanceof chai.AssertionError) {
@@ -125,7 +125,7 @@ describe('Auth endpoints', function () {
 				.request(app)
 				.post('/api/auth/refresh')
 				.then(res => {
-					expect(res).to.have.status(400);
+					expect(res).to.have.status(401);
 				})
 				.catch(err => {
 					if (err instanceof chai.AssertionError) {
@@ -152,7 +152,7 @@ describe('Auth endpoints', function () {
 				.post('/api/auth/refresh')
 				.set('Authorization', `Bearer ${token}`)
 				.then(res => {
-					expect(res).to.have.status(400);
+					expect(res).to.have.status(401);
 				})
 				.catch(err => {
 					if (err instanceof chai.AssertionError) {
@@ -182,7 +182,7 @@ describe('Auth endpoints', function () {
 				.post('/api/auth/refresh')
 				.set('authorization', `Bearer ${token}`)
 				.then(res => {
-					expect(res).to.have.status(400);
+					expect(res).to.have.status(401);
 				})
 				.catch(err => {
 					if (err instanceof chai.AssertionError) {

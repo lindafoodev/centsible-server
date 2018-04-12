@@ -83,12 +83,12 @@ describe('/api/risk/invest', function() {
 	});
 	
 
-	describe('/api/risk/invest', function() {
+	describe('/api/risk/intro', function() {
 		describe('PUT', function() {
 			it('Should update and return User data', function () {
 				return chai
 					.request(app)
-					.put('/api/risk/invest')
+					.put('/api/risk/intro')
 					.set('authorization', `Bearer ${receivedToken} `)
 					.send({
 						risk,
@@ -106,7 +106,7 @@ describe('/api/risk/invest', function() {
 			it('Should reject for missing field in body', function() {
 				return chai
 					.request(app)
-					.put('/api/risk/invest')
+					.put('/api/risk/intro')
 					.set('Authorization', `Bearer ${receivedToken}`)
 					.send({
 						risk,

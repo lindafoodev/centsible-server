@@ -32,6 +32,7 @@ describe('Auth endpoints', function () {
 	before(function() {
 		runServer();
 		console.log('runServer for tests');
+		User.remove({username: 'exampleUser'});
 		return dbConnect(TEST_DATABASE_URL);
 	});
   

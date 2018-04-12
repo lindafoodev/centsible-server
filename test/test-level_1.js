@@ -36,6 +36,7 @@ describe('/api/risk/invest', function() {
 	before(function() {
 		console.log('runServer for tests');
 		// runServer();
+		User.remove({username: 'exampleUser'});
 		return dbConnect(TEST_DATABASE_URL);
 	});
   

@@ -15,7 +15,7 @@
         "body-parser": "^1.15.2",
         "dotenv": "^5.0.1",
         "express": "^4.14.0",
-        "jsonwebtoken": "^8.2.0",
+        "jsonwebtoken": "^9.0.0",
         "moments": "0.0.2",
         "mongoose": "^5.0.12",
         "morgan": "^1.7.0",
